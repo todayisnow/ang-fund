@@ -1,0 +1,13 @@
+node_modules
+typings
+/app/**/*.js
+/app/**/*.map
+.vscode/
+.vs
+obj
+bin
+node_modules
+bin/Debug/
+packages/
+
+
