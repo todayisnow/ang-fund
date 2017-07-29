@@ -22,20 +22,39 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
+    <Content Include=".gitignore" />
+    <Content Include="app\assets\images\angularconnect-shield.png" />
+    <Content Include="app\assets\images\basic-shield.png" />
+    <Content Include="app\assets\images\ng-conf.png" />
+    <Content Include="app\assets\images\ng-nl.png" />
+    <Content Include="app\assets\images\ng-vegas.png" />
+    <Content Include="app\events-app.component.html" />
+    <Content Include="app\events\events-list.component.html" />
+    <Content Include="app\nav\nav-bar.component.html" />
+    <Content Include="favicon.ico" />
     <Content Include="index.html" />
+    <Content Include="styles.css" />
+    <Content Include="systemjs.config.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="readme.MD" />
+    <Content Include="tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app\events-app.component.ts" />
+    <TypeScriptCompile Include="app\app.module.ts" />
+    <TypeScriptCompile Include="app\events\event-thumbnail.component.ts" />
+    <TypeScriptCompile Include="app\events\events-list.component.ts" />
+    <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\nav\nav-bar.component.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
