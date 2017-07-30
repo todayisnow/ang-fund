@@ -12,6 +12,10 @@ var core_1 = require("@angular/core");
 var EventThumbnailComponent = (function () {
     function EventThumbnailComponent() {
     }
+    EventThumbnailComponent.prototype.getStartTimeClass = function () {
+        var isEarly = this.event && this.event.time === '8:00 am';
+        return { green: isEarly, bold: isEarly }; // or return strings or array 
+    };
     return EventThumbnailComponent;
 }());
 __decorate([
@@ -21,8 +25,8 @@ __decorate([
 EventThumbnailComponent = __decorate([
     core_1.Component({
         selector: "event-thumbnail",
-        styles: ["\n.pad-left {margin-left: 10px;}\n.well div {color: #bbb;}\n"],
-        template: "\n   <div class=\"well hoverwell thumbnail\">\n        <h2>{{event.name}}</h2>\n        <div>Date: {{event.date}}</div>\n        <div>Time {{event.time}}</div>\n        <div>Price: ${{ event.price }}</div>\n        <div>\n            <span>Location: {{event.location.address}}</span>\n            \n            <span class =\"pad-left\">{{event.location.city}}, {{event.location.country}}</span>\n        </div>\n    </div>\n"
+        styles: ["\n.pad-left {margin-left: 10px;}\n.well div {color: #bbb;}\n.thumbnail {min-height:210px}\n.red {color:#300 !important}\n.green {color:#030 !important}\n.bold { font-weight:bold}\n"],
+        template: "\n            <div class=\"well hoverwell thumbnail\">\n                <h2>{{event?.name}}</h2><!--if event is null dont try to bind-->\n                <span *ngIf=\"event?.onlineUrl\" class=\"label label-warning\">Online Only</span>\n                <div>Date: {{event.date}}</div>\n                <div [ngSwitch]=\"event.time\" [ngClass]=\"getStartTimeClass()\" ><!--can be inline and also [ngStyle] is the same {\"style\":\"x===y? '':''\",}-->\n                    Time {{event.time}}\n                    <span *ngSwitchCase= \"'8:00 am'\">(Early Start)</span>\n                    <span *ngSwitchCase= \"'10:00 am'\">(Late Start)</span>\n                    <span *ngSwitchDefault>(Normal Start)</span>\n                </div>\n                \n                <div [class.red]=\"event.price<700\">Price: ${{ event.price }}</div>\n                <div *ngIf=\"event.location\">\n                    <span>Location: {{event.location.address}}</span>\n\n                    <span class=\"pad-left\">{{event.location.city}}, {{event.location.country}}</span>\n                </div>\n                <div [hidden]=\"!event.onlineUrl\">\n                    Online URL: {{event.onlineUrl}}\n                </div>\n            </div>\n"
     }),
     __metadata("design:paramtypes", [])
 ], EventThumbnailComponent);

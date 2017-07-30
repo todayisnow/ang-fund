@@ -9,28 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var mock_events_1 = require("./mock-events");
 var EventsListComponent = (function () {
     function EventsListComponent() {
-        this.event = {
-            id: 1,
-            name: 'Angular Connect',
-            date: '9/26/2036',
-            time: '10:00 am',
-            price: 599.99,
-            imageUrl: '/app/assets/images/angularconnect-shield.png',
-            location: {
-                address: '1057 DT',
-                city: 'London',
-                country: 'England'
-            }
-        };
+        this.events = mock_events_1.EVENTS;
     }
     return EventsListComponent;
 }());
 EventsListComponent = __decorate([
     core_1.Component({
         selector: 'events-list',
-        template: "\n<div>\n    <h1>Upcoming Angular 2 Events</h1> \n    <hr />\n <event-thumbnail [event]=\"event\" #thumb></event-thumbnail>\n</div>\n"
+        template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
     }),
     __metadata("design:paramtypes", [])
 ], EventsListComponent);

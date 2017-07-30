@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -25,6 +25,7 @@
     <Content Include=".gitignore" />
     <Content Include="app\assets\images\angularconnect-shield.png" />
     <Content Include="app\assets\images\basic-shield.png" />
+    <Content Include="app\assets\images\essam.jpg" />
     <Content Include="app\assets\images\ng-conf.png" />
     <Content Include="app\assets\images\ng-nl.png" />
     <Content Include="app\assets\images\ng-vegas.png" />
@@ -53,6 +54,7 @@
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\events\event-thumbnail.component.ts" />
     <TypeScriptCompile Include="app\events\events-list.component.ts" />
+    <TypeScriptCompile Include="app\events\mock-events.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\nav\nav-bar.component.ts" />
   </ItemGroup>
