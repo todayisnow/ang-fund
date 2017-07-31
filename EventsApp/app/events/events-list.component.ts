@@ -1,5 +1,6 @@
-﻿import { Component } from '@angular/core'
-import {EVENTS } from './mock-events'
+﻿import { Component, OnInit } from '@angular/core'
+import { EventService } from './shared/event.service'
+import { ToastrService } from '../common/toastr.service'
 @Component({
     selector: 'events-list',
     template: `
@@ -8,16 +9,27 @@ import {EVENTS } from './mock-events'
                 <hr />
                 <div class="row">
                     <div class="col-md-5" *ngFor="let event of events">
-                        <event-thumbnail [event]="event" #thumb></event-thumbnail>
+                        <event-thumbnail [event]="event" #thumb (click)="handleThumbnailClick(event.name)"></event-thumbnail>
                     </div>
                 </div>
             </div>
 `
 })
 
-export class EventsListComponent {
-    events = EVENTS
+export class EventsListComponent implements OnInit {
+    events: any[]
+    constructor(private eventService: EventService,
+        private toastrService: ToastrService) {
     }
+
+    ngOnInit() {
+        this.events = this.eventService.getEvents()
+    }
+
+    handleThumbnailClick(data) {
+        this.toastrService.success(data)
+    }
+}
 
    
 

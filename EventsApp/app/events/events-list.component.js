@@ -9,19 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var mock_events_1 = require("./mock-events");
+var event_service_1 = require("./shared/event.service");
+var toastr_service_1 = require("../common/toastr.service");
 var EventsListComponent = (function () {
-    function EventsListComponent() {
-        this.events = mock_events_1.EVENTS;
+    function EventsListComponent(eventService, toastrService) {
+        this.eventService = eventService;
+        this.toastrService = toastrService;
     }
+    EventsListComponent.prototype.ngOnInit = function () {
+        this.events = this.eventService.getEvents();
+    };
+    EventsListComponent.prototype.handleThumbnailClick = function (data) {
+        this.toastrService.success(data);
+    };
     return EventsListComponent;
 }());
 EventsListComponent = __decorate([
     core_1.Component({
         selector: 'events-list',
-        template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
+        template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb (click)=\"handleThumbnailClick(event.name)\"></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [event_service_1.EventService,
+        toastr_service_1.ToastrService])
 ], EventsListComponent);
 exports.EventsListComponent = EventsListComponent;
 //# sourceMappingURL=events-list.component.js.map

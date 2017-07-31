@@ -1,4 +1,16 @@
-﻿export const EVENTS = [
+﻿import { Injectable} from '@angular/core'
+
+@Injectable()
+
+export class EventService {
+    getEvents() {
+        return EVENTS;
+
+    }
+
+}
+
+const EVENTS = [
     {
         id: 1,
         name: 'Angular Connect',
