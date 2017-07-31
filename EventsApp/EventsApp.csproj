@@ -30,8 +30,16 @@
     <Content Include="app\assets\images\ng-nl.png" />
     <Content Include="app\assets\images\ng-vegas.png" />
     <Content Include="app\events-app.component.html" />
+    <Content Include="app\events\create-event.component.html" />
+    <Content Include="app\events\event-details\create-session.component.html" />
+    <Content Include="app\events\event-details\event-details.component.html" />
+    <Content Include="app\events\event-details\session-list.component.html" />
+    <Content Include="app\events\event-details\upvote.component.css" />
     <Content Include="app\events\event-thumbnail.component.html" />
     <Content Include="app\nav\nav-bar.component.html" />
+    <TypeScriptCompile Include="app\error\404.component.ts" />
+    <TypeScriptCompile Include="app\events\create-event.component.ts" />
+    <TypeScriptCompile Include="app\routes.ts" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
     <Content Include="styles.css" />
@@ -53,6 +61,9 @@
     <TypeScriptCompile Include="app\common\toastr.service.ts" />
     <TypeScriptCompile Include="app\events-app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
+    <TypeScriptCompile Include="app\events\event-details\session-list.component.ts" />
+    <TypeScriptCompile Include="app\events\event-details\create-session.component.ts" />
+    <TypeScriptCompile Include="app\events\event-details\event-details.component.ts" />
     <TypeScriptCompile Include="app\events\event-thumbnail.component.ts" />
     <TypeScriptCompile Include="app\events\events-list.component.ts" />
     <TypeScriptCompile Include="app\events\shared\event.service.ts" />

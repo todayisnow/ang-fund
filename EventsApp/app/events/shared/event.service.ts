@@ -7,6 +7,10 @@ export class EventService {
         return EVENTS;
 
     }
+    getEvent(id: number)
+    {
+        return EVENTS.find(m=>m.id === id)
+    }
 
 }
 
