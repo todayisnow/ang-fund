@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var event_service_1 = require("./shared/event.service");
-var toastr_service_1 = require("../common/toastr.service");
 var router_1 = require("@angular/router");
+var index_1 = require("./shared/index");
+var toastr_service_1 = require("../common/toastr.service");
 var EventsListComponent = (function () {
     function EventsListComponent(eventService, toastrService, route) {
         this.eventService = eventService;
@@ -33,7 +33,7 @@ EventsListComponent = __decorate([
         selector: 'events-list',
         template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb (click)=\"handleThumbnailClick(event.name)\"></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
     }),
-    __metadata("design:paramtypes", [event_service_1.EventService,
+    __metadata("design:paramtypes", [index_1.EventService,
         toastr_service_1.ToastrService,
         router_1.ActivatedRoute])
 ], EventsListComponent);

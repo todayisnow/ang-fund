@@ -43,6 +43,7 @@
     <TypeScriptCompile Include="app\events\event-details\index.ts" />
     <TypeScriptCompile Include="app\events\event-list-resolver.service.ts" />
     <TypeScriptCompile Include="app\events\index.ts" />
+    <TypeScriptCompile Include="app\events\shared\event.model.ts" />
     <TypeScriptCompile Include="app\events\shared\index.ts" />
     <TypeScriptCompile Include="app\routes.ts" />
     <Content Include="app\user\login.component.html" />

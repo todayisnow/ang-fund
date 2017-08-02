@@ -27,7 +27,7 @@ EventThumbnailComponent = __decorate([
         selector: "event-thumbnail",
         moduleId: './app/events/',
         templateUrl: './event-thumbnail.component.html',
-        styles: ["\n.pad-left {margin-left: 10px;}\n.well div {color: #bbb;}\n.thumbnail {min-height:210px}\n.red {color:#300 !important}\n.green {color:#030 !important}\n.bold { font-weight:bold}\n"],
+        styles: ["\n.pad-left {margin-left: 10px;}\n.well div {color: #bbb;}\n.thumbnail {min-height:230px}\n.red {color:#300 !important}\n.green {color:#030 !important}\n.bold { font-weight:bold}\n"],
     }),
     __metadata("design:paramtypes", [])
 ], EventThumbnailComponent);

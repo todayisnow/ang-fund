@@ -1,5 +1,5 @@
 ﻿import { Component, Input , Output, EventEmitter} from '@angular/core'
-
+import { IEvent} from './shared/event.model'
 
 @Component({
     selector: "event-thumbnail",
@@ -8,7 +8,7 @@
     styles: [`
 .pad-left {margin-left: 10px;}
 .well div {color: #bbb;}
-.thumbnail {min-height:210px}
+.thumbnail {min-height:230px}
 .red {color:#300 !important}
 .green {color:#030 !important}
 .bold { font-weight:bold}
@@ -17,7 +17,7 @@
 })
 
 export class EventThumbnailComponent {
-    @Input() event: any
+    @Input() event: IEvent
 
     getStartTimeClass()
     {
