@@ -39,12 +39,22 @@
     <Content Include="app\nav\nav-bar.component.html" />
     <TypeScriptCompile Include="app\error\404.component.ts" />
     <TypeScriptCompile Include="app\events\create-event.component.ts" />
+    <TypeScriptCompile Include="app\events\event-details\event-route-activator.service.ts" />
+    <TypeScriptCompile Include="app\events\event-details\index.ts" />
+    <TypeScriptCompile Include="app\events\event-list-resolver.service.ts" />
+    <TypeScriptCompile Include="app\events\index.ts" />
+    <TypeScriptCompile Include="app\events\shared\index.ts" />
     <TypeScriptCompile Include="app\routes.ts" />
+    <Content Include="app\user\login.component.html" />
+    <Content Include="app\user\profile.component.html" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
     <Content Include="styles.css" />
     <Content Include="systemjs.config.js" />
     <Content Include="web.config" />
+    <TypeScriptCompile Include="app\user\profile.component.ts" />
+    <TypeScriptCompile Include="app\user\user.module.ts" />
+    <TypeScriptCompile Include="app\user\user.routes.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
