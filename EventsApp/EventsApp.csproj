@@ -45,6 +45,7 @@
     <TypeScriptCompile Include="app\events\index.ts" />
     <TypeScriptCompile Include="app\events\shared\event.model.ts" />
     <TypeScriptCompile Include="app\events\shared\index.ts" />
+    <TypeScriptCompile Include="app\events\shared\restricted-words.validator.ts" />
     <TypeScriptCompile Include="app\routes.ts" />
     <Content Include="app\user\login.component.html" />
     <Content Include="app\user\profile.component.html" />
