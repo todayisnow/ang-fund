@@ -17,6 +17,7 @@ var index_1 = require("./events/index");
 var nav_bar_component_1 = require("./nav/nav-bar.component");
 var _404_component_1 = require("./error/404.component");
 var toastr_service_1 = require("./common/toastr.service");
+var auth_service_1 = require("./user/auth.service");
 var routes_1 = require("./routes");
 var AppModule = (function () {
     function AppModule() {
@@ -28,6 +29,7 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
+            forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot(routes_1.appRoutes),
         ],
         declarations: [
@@ -49,7 +51,8 @@ AppModule = __decorate([
                 provide: 'CanDeactivateCreateEvent',
                 useValue: chechDirtyState
             },
-            index_1.EventListResolver
+            index_1.EventListResolver,
+            auth_service_1.AuthService
         ],
         bootstrap: [events_app_component_1.EventsAppComponent]
     }),

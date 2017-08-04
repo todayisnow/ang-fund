@@ -25,7 +25,8 @@
       '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
       '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
       // other libraries
-      'rxjs':                       'npm:rxjs',
+      'rxjs': 'npm:rxjs',
+      //'angular2-image-upload': 'npm:angular2-image-upload/'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -35,7 +36,11 @@
       },
       rxjs: {
         defaultExtension: 'js'
-      }
+      },
+      //'angular2-image-upload': {
+      //    main: './index.js',
+      //    defaultExtension: 'js'
+      //}
     }
   });
 })(this);

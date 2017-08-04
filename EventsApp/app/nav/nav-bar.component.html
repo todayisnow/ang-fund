@@ -25,11 +25,14 @@
             <div class="navbar-header navbar-right">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a [routerLink]="['/user/profile']">
-                            Welcome Essam
+                        <a [routerLink]="['/user/login']" *ngIf="!auth.isAuthenticated()">Login</a>
+                  
+                            <a [routerLink]="['/user/profile']" *ngIf="auth.isAuthenticated()">
+                                Welcome {{auth.currentUser.firstName}}
 
-                            <img src="./app/assets/images/essam.jpg" style="width:25px;margin-left:10px;" />
-                        </a>
+                                <img [src]="auth.currentUser.imgUrl" style="width:25px;margin-left:10px;" />
+                            </a>
+                      
                     </li>
                 </ul>
             </div>

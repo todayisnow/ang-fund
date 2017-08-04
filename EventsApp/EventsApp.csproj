@@ -53,7 +53,10 @@
     <Content Include="styles.css" />
     <Content Include="systemjs.config.js" />
     <Content Include="web.config" />
+    <TypeScriptCompile Include="app\user\auth.service.ts" />
+    <TypeScriptCompile Include="app\user\login.component.ts" />
     <TypeScriptCompile Include="app\user\profile.component.ts" />
+    <TypeScriptCompile Include="app\user\user.model.ts" />
     <TypeScriptCompile Include="app\user\user.module.ts" />
     <TypeScriptCompile Include="app\user\user.routes.ts" />
   </ItemGroup>

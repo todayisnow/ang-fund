@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { FormsModule } from '@angular/forms';//validation ,form, two way binding
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';//validation ,form, two way binding
 import { RouterModule } from '@angular/router';
 import { EventsAppComponent} from './events-app.component'
 import {
@@ -20,7 +20,7 @@ import { NavBarComponent } from './nav/nav-bar.component'
 import { Error404Component} from './error/404.component'
 
 import { ToastrService } from './common/toastr.service'
-
+import { AuthService } from './user/auth.service'
 
 import { appRoutes } from './routes'
 
@@ -30,7 +30,9 @@ import { appRoutes } from './routes'
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule.forRoot(appRoutes),
+        
         
     ],
     declarations: [
@@ -52,7 +54,8 @@ import { appRoutes } from './routes'
             provide: 'CanDeactivateCreateEvent',
             useValue:chechDirtyState
         },
-        EventListResolver
+        EventListResolver,
+        AuthService
     ],
     bootstrap: [EventsAppComponent]
 
