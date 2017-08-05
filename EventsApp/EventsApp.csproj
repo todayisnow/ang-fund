@@ -37,12 +37,14 @@
     <Content Include="app\events\event-details\upvote.component.css" />
     <Content Include="app\events\event-thumbnail.component.html" />
     <Content Include="app\nav\nav-bar.component.html" />
+    <TypeScriptCompile Include="app\common\collapsible-well.component.ts" />
     <TypeScriptCompile Include="app\error\404.component.ts" />
     <TypeScriptCompile Include="app\events\create-event.component.ts" />
     <TypeScriptCompile Include="app\events\event-details\event-route-activator.service.ts" />
     <TypeScriptCompile Include="app\events\event-details\index.ts" />
     <TypeScriptCompile Include="app\events\event-list-resolver.service.ts" />
     <TypeScriptCompile Include="app\events\index.ts" />
+    <TypeScriptCompile Include="app\events\shared\duration.pipe.ts" />
     <TypeScriptCompile Include="app\events\shared\event.model.ts" />
     <TypeScriptCompile Include="app\events\shared\index.ts" />
     <TypeScriptCompile Include="app\events\shared\restricted-words.validator.ts" />

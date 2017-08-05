@@ -16,6 +16,7 @@ var events_app_component_1 = require("./events-app.component");
 var index_1 = require("./events/index");
 var nav_bar_component_1 = require("./nav/nav-bar.component");
 var _404_component_1 = require("./error/404.component");
+var collapsible_well_component_1 = require("./common/collapsible-well.component");
 var toastr_service_1 = require("./common/toastr.service");
 var auth_service_1 = require("./user/auth.service");
 var routes_1 = require("./routes");
@@ -41,7 +42,9 @@ AppModule = __decorate([
             index_1.SessionListComponent,
             index_1.EventDetailsComponent,
             index_1.CreateEventComponent,
-            _404_component_1.Error404Component
+            _404_component_1.Error404Component,
+            collapsible_well_component_1.CollapsibleWellComponent,
+            index_1.DurationPipe
         ],
         providers: [
             index_1.EventService,

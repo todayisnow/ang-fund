@@ -1,5 +1,5 @@
 ﻿
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ISession, EventService,restrictedWords } from '../shared/index'
 import { ToastrService } from '../../common/toastr.service'
@@ -20,6 +20,8 @@ em {float:right; color:#E05C65;padding-left:10px}
 `]
 })
 export class CreateSessionComponent implements OnInit {
+    @Output() newSession = new EventEmitter<ISession>()
+    @Output() cancelForm = new EventEmitter()
 
     sessionForm: FormGroup
     name: FormControl
@@ -63,10 +65,11 @@ export class CreateSessionComponent implements OnInit {
             abstract: formValue.abstract,
             voters: []
         }
-        console.log(session)
+        this.newSession.emit(session)
         this.toastr.success("Session Saved!!!")
     }
     cancel() {
-        this.router.navigate(['/events'])
+        this.cancelForm.emit()
+        
     }
 }
