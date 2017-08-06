@@ -38,6 +38,10 @@
     <Content Include="app\events\event-thumbnail.component.html" />
     <Content Include="app\nav\nav-bar.component.html" />
     <TypeScriptCompile Include="app\common\collapsible-well.component.ts" />
+    <TypeScriptCompile Include="app\common\index.ts" />
+    <TypeScriptCompile Include="app\common\jQuery.service.ts" />
+    <TypeScriptCompile Include="app\common\modal-trigger.directive.ts" />
+    <TypeScriptCompile Include="app\common\simple-modal.component.ts" />
     <TypeScriptCompile Include="app\error\404.component.ts" />
     <TypeScriptCompile Include="app\events\create-event.component.ts" />
     <TypeScriptCompile Include="app\events\event-details\event-route-activator.service.ts" />

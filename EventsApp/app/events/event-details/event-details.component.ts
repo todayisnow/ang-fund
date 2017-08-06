@@ -1,6 +1,6 @@
 ﻿
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, Router, Params } from '@angular/router'
 import { EventService, IEvent, ISession } from '../shared/index'
 
 
@@ -27,8 +27,13 @@ export class EventDetailsComponent implements OnInit {
     }
     ngOnInit()
     {
-        let id = +this.route.snapshot.params['id']
-        this.event = this.eventService.getEvent(id)
+        //navigate to the same component need a reset
+        this.route.params.forEach((params: Params) => {
+            this.event = this.eventService.getEvent(+params['id'])
+        })
+        this.addMode = false
+        //let id = +this.route.snapshot.params['id']
+        //this.event = this.eventService.getEvent(id)
     }
     addSession() {
         this.addMode = true

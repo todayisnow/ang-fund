@@ -8,14 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("./shared/index");
 var toastr_service_1 = require("../common/toastr.service");
 var EventsListComponent = (function () {
-    function EventsListComponent(eventService, toastrService, route) {
+    function EventsListComponent(eventService, toastr, route) {
         this.eventService = eventService;
-        this.toastrService = toastrService;
+        this.toastr = toastr;
         this.route = route;
     }
     EventsListComponent.prototype.ngOnInit = function () {
@@ -33,9 +36,8 @@ EventsListComponent = __decorate([
         selector: 'events-list',
         template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb (click)=\"handleThumbnailClick(event.name)\"></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
     }),
-    __metadata("design:paramtypes", [index_1.EventService,
-        toastr_service_1.ToastrService,
-        router_1.ActivatedRoute])
+    __param(1, core_1.Inject(toastr_service_1.TOASTR_TOCKEN)),
+    __metadata("design:paramtypes", [index_1.EventService, Object, router_1.ActivatedRoute])
 ], EventsListComponent);
 exports.EventsListComponent = EventsListComponent;
 //# sourceMappingURL=events-list.component.js.map

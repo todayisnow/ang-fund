@@ -16,8 +16,7 @@ var events_app_component_1 = require("./events-app.component");
 var index_1 = require("./events/index");
 var nav_bar_component_1 = require("./nav/nav-bar.component");
 var _404_component_1 = require("./error/404.component");
-var collapsible_well_component_1 = require("./common/collapsible-well.component");
-var toastr_service_1 = require("./common/toastr.service");
+var index_2 = require("./common/index");
 var auth_service_1 = require("./user/auth.service");
 var routes_1 = require("./routes");
 var AppModule = (function () {
@@ -43,16 +42,25 @@ AppModule = __decorate([
             index_1.EventDetailsComponent,
             index_1.CreateEventComponent,
             _404_component_1.Error404Component,
-            collapsible_well_component_1.CollapsibleWellComponent,
-            index_1.DurationPipe
+            index_2.CollapsibleWellComponent,
+            index_1.DurationPipe,
+            index_2.ModalTriggerDirective,
+            index_2.SimpleModalComponent,
         ],
         providers: [
             index_1.EventService,
-            toastr_service_1.ToastrService,
+            {
+                provide: index_2.TOASTR_TOCKEN,
+                useValue: toastr
+            },
             index_1.EventRouteActivator,
             {
                 provide: 'CanDeactivateCreateEvent',
                 useValue: chechDirtyState
+            },
+            {
+                provide: index_2.JQ_TOCKEN,
+                useValue: jQuery
             },
             index_1.EventListResolver,
             auth_service_1.AuthService

@@ -26,24 +26,37 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a [routerLink]="['/user/login']" *ngIf="!auth.isAuthenticated()">Login</a>
-                  
-                            <a [routerLink]="['/user/profile']" *ngIf="auth.isAuthenticated()">
-                                Welcome {{auth.currentUser.firstName}}
 
-                                <img [src]="auth.currentUser.imgUrl" style="width:25px;margin-left:10px;" />
-                            </a>
-                      
+                        <a [routerLink]="['/user/profile']" *ngIf="auth.isAuthenticated()">
+                            Welcome {{auth.currentUser.firstName}}
+
+                            <img [src]="auth.currentUser.imgUrl" style="width:25px;margin-left:10px;" />
+                        </a>
+
                     </li>
                 </ul>
             </div>
-            <form id="searchForm" class="navbar-form navbar-right">
+            <form id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchSessions(searchTerm)">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search Sessions">
+                    <input type="text" class="form-control" placeholder="Search Sessions" [(ngModel)]="searchTerm" name="searchTerm" >
                 </div>
-                <button class="btn btn-default">
+                <button class="btn btn-default" modal-trigger="searchResults">
                     Search
                 </button>
             </form>
         </div>
     </div>
 </div>
+<simple-modal title="Matching Sessions" elementId="searchResults" closeOnBodyClick="true">
+    <div class="list-group">
+        <span *ngIf="foundSession.length>0">
+            <a class="list-group-item" *ngFor="let session of foundSession" [routerLink]="['/events',session.eventId]">
+                {{session.name}}
+            </a>
+        </span>
+        <span *ngIf="foundSession.length===0">No Session Found</span>
+    </div>
+
+</simple-modal>
+
+
