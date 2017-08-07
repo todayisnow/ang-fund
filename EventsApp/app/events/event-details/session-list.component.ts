@@ -1,6 +1,10 @@
 ﻿
 import { Component, Input, OnChanges } from '@angular/core';
-import { ISession} from '../shared/index'
+import { ISession } from '../shared/index'
+import { AuthService } from '../../user/auth.service'
+import { VoterService } from './voter.service'
+
+
 @Component({
     selector: 'session-list',
     moduleId: './app/events/event-details/',
@@ -14,8 +18,9 @@ export class SessionListComponent implements OnChanges {
     visibleSession: ISession[] = []
     @Input() filterBy: string
     @Input() sortBy: string
-    constructor() {
-
+    constructor(private auth: AuthService,
+        private voterService: VoterService) {
+       
     }
     ngOnChanges() { // will be called every time input changes
         if (this.sessions) {
@@ -24,14 +29,29 @@ export class SessionListComponent implements OnChanges {
         }
     }
 
-      filterSession(filter: string) {
+    filterSession(filter: string) {
         if (filter === 'all')
             this.visibleSession = this.sessions.slice(0) // cloning
         else
             this.visibleSession = this.sessions.filter(session => {
                 return session.level.toLocaleLowerCase() === filter;
             })
-    
+
+    }
+    toggleVote(session) {
+        
+        if (this.userHasVoted(session)) {
+            this.voterService.deleteVoter(session, this.auth.currentUser.userName)
+        }
+        else {
+            this.voterService.addVoter(session, this.auth.currentUser.userName)
+        }
+        if (this.sortBy === 'votes') {
+            this.visibleSession.sort(sortByVotesDesc)
+        }
+    }
+    userHasVoted(session) {
+        return this.voterService.userHasVoted(session, this.auth.currentUser.userName)
     }
 }
 function sortByNameAsc(s1: ISession, s2: ISession) {

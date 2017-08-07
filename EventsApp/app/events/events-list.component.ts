@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit, Inject } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { EventService, IEvent } from './shared/index'
-import { TOASTR_TOCKEN, Toastr  } from '../common/toastr.service'
 
 @Component({
     selector: 'events-list',
@@ -22,7 +21,6 @@ export class EventsListComponent implements OnInit {
     events: IEvent[]
     constructor(
         private eventService: EventService,
-        @Inject(TOASTR_TOCKEN) private toastr: Toastr,
         private route: ActivatedRoute
         ) {
     }
@@ -34,9 +32,7 @@ export class EventsListComponent implements OnInit {
         
     }
 
-    handleThumbnailClick(data) {
-        this.toastrService.success(data)
-    }
+   
 }
 
    

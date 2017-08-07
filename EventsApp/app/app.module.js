@@ -46,6 +46,7 @@ AppModule = __decorate([
             index_1.DurationPipe,
             index_2.ModalTriggerDirective,
             index_2.SimpleModalComponent,
+            index_1.UpVoteComponent
         ],
         providers: [
             index_1.EventService,
@@ -63,7 +64,8 @@ AppModule = __decorate([
                 useValue: jQuery
             },
             index_1.EventListResolver,
-            auth_service_1.AuthService
+            auth_service_1.AuthService,
+            index_1.VoterService
         ],
         bootstrap: [events_app_component_1.EventsAppComponent]
     }),

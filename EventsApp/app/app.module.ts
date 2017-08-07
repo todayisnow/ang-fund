@@ -13,7 +13,9 @@ import {
     EventService,
     EventRouteActivator,
     EventListResolver,
-    DurationPipe
+    DurationPipe,
+    UpVoteComponent,
+    VoterService
 } from './events/index'
 
 import { NavBarComponent } from './nav/nav-bar.component'
@@ -57,6 +59,7 @@ declare let jQuery: Object
         DurationPipe,
         ModalTriggerDirective,
         SimpleModalComponent,
+        UpVoteComponent
     ],
     providers: [
         EventService,
@@ -74,7 +77,8 @@ declare let jQuery: Object
             useValue: jQuery
         },
         EventListResolver,
-        AuthService
+        AuthService,
+        VoterService
     ],
     bootstrap: [EventsAppComponent]
 
