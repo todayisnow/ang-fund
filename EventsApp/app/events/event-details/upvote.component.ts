@@ -25,9 +25,10 @@ export class UpVoteComponent {
     @Input() count: number
     //'based on input value you need to to stuff it can be ngOnChange or input setter'
     @Input() set voted(val) {
-        this.iconColor = val?'red':'while'
+        this.iconColor = val ? 'red' : 'white'
+        
     }
-    iconColor:string
+    iconColor: string 
     @Output() vote = new EventEmitter()
     constructor(private eventService: EventService) {
 

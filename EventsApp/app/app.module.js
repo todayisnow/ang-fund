@@ -46,7 +46,8 @@ AppModule = __decorate([
             index_1.DurationPipe,
             index_2.ModalTriggerDirective,
             index_2.SimpleModalComponent,
-            index_1.UpVoteComponent
+            index_1.UpVoteComponent,
+            index_1.LocationValidator
         ],
         providers: [
             index_1.EventService,
