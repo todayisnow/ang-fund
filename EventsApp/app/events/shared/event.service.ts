@@ -5,10 +5,16 @@ import { IEvent, ISession } from './event.model'
 @Injectable()
 
 export class EventService {
+    events: IEvent[]
+    eventsChanges: Subject<IEvent[]> = new Subject < IEvent[] >()
     constructor(private http: Http) { }
     getEvents(): Observable<IEvent[]> {
         return this.http.get('api/events').map((response: Response) => {
-            return <IEvent>response.json();
+            
+                this.events = <IEvent[]>response.json();
+                this.eventsChanges.next(this.events)
+                return this.events
+            
         }).catch(this.handleError);
     }
     getEvent(id: number): Observable<IEvent>
@@ -21,7 +27,7 @@ export class EventService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post('/api/events',event, options).map((response: Response) => {
+        return this.http.post('/api/events', event, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }

@@ -24,6 +24,10 @@ var NavBarComponent = (function () {
             _this.foundSession = sessions;
         });
     };
+    NavBarComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.eventService.eventsChanges.subscribe(function (events) { return _this.events = events; });
+    };
     return NavBarComponent;
 }());
 NavBarComponent = __decorate([
