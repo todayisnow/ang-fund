@@ -28,10 +28,11 @@ export class EventDetailsComponent implements OnInit {
     ngOnInit()
     {
         //navigate to the same component need a reset
-        this.route.params.forEach((params: Params) => {
-            this.event = this.eventService.getEvent(+params['id'])
-        })
-        this.addMode = false
+        this.route.data.forEach((data) => {
+            this.event = data['event']
+            this.addMode = false
+             })
+       
         //let id = +this.route.snapshot.params['id']
         //this.event = this.eventService.getEvent(id)
     }
@@ -42,11 +43,16 @@ export class EventDetailsComponent implements OnInit {
         this.addMode = false
     }
     saveSession(sessionData: ISession) {
-        const nextId = Math.max.apply(null, this.event.sessions.map(m => m.id)) + 1
-        sessionData.id = nextId
+        if (this.event.sessions.length > 0) {
+            const nextId = Math.max.apply(null, this.event.sessions.map(s => s.id));
+            sessionData.id = nextId + 1
+        }
+        else
+            sessionData.id = 1;
         this.event.sessions.push(sessionData)
-        this.eventService.updateEvent(this.event)
-        this.addMode= false
+        this.eventService.saveEvent(this.event).subscribe(() => {
+            this.addMode = false
+        })
     }
     
 }

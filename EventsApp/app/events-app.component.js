@@ -9,9 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var auth_service_1 = require("./user/auth.service");
 var EventsAppComponent = (function () {
-    function EventsAppComponent() {
+    function EventsAppComponent(auth) {
+        this.auth = auth;
     }
+    EventsAppComponent.prototype.ngOnInit = function () {
+        this.auth.checkAuthenticationStatus();
+    };
     return EventsAppComponent;
 }());
 EventsAppComponent = __decorate([
@@ -20,7 +25,7 @@ EventsAppComponent = __decorate([
         moduleId: './app/',
         templateUrl: './events-app.component.html'
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], EventsAppComponent);
 exports.EventsAppComponent = EventsAppComponent;
 //# sourceMappingURL=events-app.component.js.map

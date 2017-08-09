@@ -11,17 +11,21 @@ em {float:right; color:#E05c65; padding-left:10px}
 `]
 })
 export class LoginComponent {
+    loginInvalid: boolean = false
 
     constructor(private authService: AuthService, private  router:Router) {
 
     }
-    Login(formValue)
+    Login(formValues)
     {
-        this.authService.loginUser(formValue.userName, formValue.password)
-        if (this.authService.isAuthenticated())
-        {
-            this.router.navigate(['/events'])
-        }
+        this.authService.loginUser(formValues.userName, formValues.password).subscribe(resp => {
+            if (!resp) {
+                this.loginInvalid = true;
+            } else {
+                
+                this.router.navigate(['events'])
+            }
+        })
     }
     cancel()
     {

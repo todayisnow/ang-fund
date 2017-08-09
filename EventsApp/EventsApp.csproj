@@ -44,6 +44,7 @@
     <TypeScriptCompile Include="app\common\simple-modal.component.ts" />
     <TypeScriptCompile Include="app\error\404.component.ts" />
     <TypeScriptCompile Include="app\events\create-event.component.ts" />
+    <TypeScriptCompile Include="app\events\event-details\event-resolver.service.ts" />
     <TypeScriptCompile Include="app\events\event-details\event-route-activator.service.ts" />
     <TypeScriptCompile Include="app\events\event-details\index.ts" />
     <TypeScriptCompile Include="app\events\event-details\upvote.component.ts" />

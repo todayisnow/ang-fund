@@ -3,9 +3,9 @@
     <hr>
     <div class="col-md-4">
         <form autocomplete="off" [formGroup]="profileForm" (ngSubmit)="save(profileForm.value)">
-            <div class="form-group">
+            <!--<div class="form-group">
                 <img [src]="auth.currentUser.imgUrl" style="width:150px;" />
-            </div>
+            </div>-->
             <div class="form-group" [ngClass]="{'error':!validateFirstName()}">
                 <label for="firstName">First Name:</label>
                 <em *ngIf="!validateFirstName() && profileForm.controls.firstName.errors.required">Required</em>
@@ -20,7 +20,7 @@
           
             <button type="submit" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
-
+            <button type="button" class="btn btn-warning" style="float:right" (click)="logout()">Logout</button>
         </form>
     </div>
 </div>

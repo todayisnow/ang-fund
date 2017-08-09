@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';//validation ,form, two way binding
 import { RouterModule } from '@angular/router';
+import { HttpModule} from '@angular/http'
 import { EventsAppComponent} from './events-app.component'
 import {
     EventsListComponent,
@@ -16,7 +17,8 @@ import {
     DurationPipe,
     UpVoteComponent,
     VoterService,
-    LocationValidator
+    LocationValidator,
+    EventResolver
 } from './events/index'
 
 import { NavBarComponent } from './nav/nav-bar.component'
@@ -43,7 +45,7 @@ declare let jQuery: Object
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes),
-        
+        HttpModule
         
     ],
     declarations: [
@@ -79,6 +81,8 @@ declare let jQuery: Object
             useValue: jQuery
         },
         EventListResolver,
+        EventResolver,
+
         AuthService,
         VoterService
     ],

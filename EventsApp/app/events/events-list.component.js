@@ -26,7 +26,7 @@ var EventsListComponent = (function () {
 EventsListComponent = __decorate([
     core_1.Component({
         selector: 'events-list',
-        template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb (click)=\"handleThumbnailClick(event.name)\"></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
+        template: "\n            <div>\n                <h1>Upcoming Angular 2 Events</h1>\n                <hr />\n                <div class=\"row\">\n                    <div class=\"col-md-5\" *ngFor=\"let event of events\">\n                        <event-thumbnail [event]=\"event\" #thumb></event-thumbnail>\n                    </div>\n                </div>\n            </div>\n"
     }),
     __metadata("design:paramtypes", [index_1.EventService,
         router_1.ActivatedRoute])

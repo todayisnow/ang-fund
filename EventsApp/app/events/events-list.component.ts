@@ -10,7 +10,7 @@ import { EventService, IEvent } from './shared/index'
                 <hr />
                 <div class="row">
                     <div class="col-md-5" *ngFor="let event of events">
-                        <event-thumbnail [event]="event" #thumb (click)="handleThumbnailClick(event.name)"></event-thumbnail>
+                        <event-thumbnail [event]="event" #thumb></event-thumbnail>
                     </div>
                 </div>
             </div>
@@ -23,13 +23,14 @@ export class EventsListComponent implements OnInit {
         private eventService: EventService,
         private route: ActivatedRoute
         ) {
+
     }
 
     ngOnInit() {
         //this.eventService.getEvents().subscribe(data => this.events = data)
         //this.events = this.eventService.getEvents()
         this.events = this.route.snapshot.data['events']
-        
+
     }
 
    

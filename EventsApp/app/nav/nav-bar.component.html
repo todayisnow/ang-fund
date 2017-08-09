@@ -30,7 +30,7 @@
                         <a [routerLink]="['/user/profile']" *ngIf="auth.isAuthenticated()">
                             Welcome {{auth.currentUser.firstName}}
 
-                            <img [src]="auth.currentUser.imgUrl" style="width:25px;margin-left:10px;" />
+                            <!--<img *ngIf="auth.currentUser.imgUrl" [src]="auth.currentUser.imgUrl" style="width:25px;margin-left:10px;" -->
                         </a>
 
                     </li>

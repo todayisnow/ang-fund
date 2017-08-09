@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms"); //validation ,form, two way binding
 var router_1 = require("@angular/router");
+var http_1 = require("@angular/http");
 var events_app_component_1 = require("./events-app.component");
 var index_1 = require("./events/index");
 var nav_bar_component_1 = require("./nav/nav-bar.component");
@@ -31,6 +32,7 @@ AppModule = __decorate([
             forms_1.FormsModule,
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot(routes_1.appRoutes),
+            http_1.HttpModule
         ],
         declarations: [
             events_app_component_1.EventsAppComponent,
@@ -65,6 +67,7 @@ AppModule = __decorate([
                 useValue: jQuery
             },
             index_1.EventListResolver,
+            index_1.EventResolver,
             auth_service_1.AuthService,
             index_1.VoterService
         ],
