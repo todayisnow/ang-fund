@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core'
+﻿import { Component } from '@angular/core';
 
 @Component({
     selector: 'collapsible-well',
@@ -16,10 +16,10 @@
 
 export class CollapsibleWellComponent {
     
-    visable: boolean = true
+    visable: boolean = true;
 
     toggleContent() {
-        this.visable = !this.visable
+        this.visable = !this.visable;
 
     }
 

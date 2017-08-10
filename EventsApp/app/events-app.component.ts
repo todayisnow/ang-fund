@@ -1,11 +1,11 @@
-﻿import {Component } from '@angular/core'
-import { AuthService } from './user/auth.service'
+﻿import {Component } from '@angular/core';
+import { AuthService } from './user/auth.service';
 @Component({
     selector: 'events-app',
     moduleId:'./app/',
     templateUrl:'./events-app.component.html'
 })
-
+     
 
 
 

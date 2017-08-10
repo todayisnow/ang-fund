@@ -1,8 +1,8 @@
-﻿import { Component, OnInit, Inject } from '@angular/core'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
-import { AuthService } from './auth.service'
-import { TOASTR_TOCKEN, Toastr  } from '../common/toastr.service'
+﻿import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { TOASTR_TOCKEN, Toastr  } from '../common/toastr.service';
 
 
 @Component({
@@ -20,9 +20,9 @@ em {float:right; color:#E05C65;padding-left:10px}
 `]
 })
 export class ProfileComponent implements OnInit {
-    profileForm: FormGroup
-    private firstName: FormControl
-    private lastName: FormControl
+    profileForm: FormGroup;
+    private firstName: FormControl;
+    private lastName: FormControl;
 
     constructor(
         private router: Router,
@@ -33,37 +33,37 @@ export class ProfileComponent implements OnInit {
     }
     ngOnInit() {
 
-        this.firstName = new FormControl(this.auth.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*')])
-        this.lastName = new FormControl(this.auth.currentUser.lastName, Validators.required)
+        this.firstName = new FormControl(this.auth.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*')]);
+        this.lastName = new FormControl(this.auth.currentUser.lastName, Validators.required);
         this.profileForm = new FormGroup({
             firstName: this.firstName,
             lastName: this.lastName
-        })
+        });
 
 
     }
     cancel() {
-        this.router.navigate(['/events'])
+        this.router.navigate(['/events']);
     }
     save(formValues) {
         if (this.profileForm.valid) {
             this.auth.updateCurrentUser(formValues.firstName, formValues.lastName).subscribe(() => {
-                this.toastr.success("Current User Saved")
+                this.toastr.success('Current User Saved');
                 this.router.navigate(['/events']);
-            })
+            });
         }
     }
     validateFirstName() {
-        return this.firstName.valid || this.firstName.untouched
+        return this.firstName.valid || this.firstName.untouched;
     }
     validateLastName() {
-        return this.lastName.valid || this.lastName.untouched
+        return this.lastName.valid || this.lastName.untouched;
     }
    
    
     logout() {
         this.auth.logout().subscribe(() => {
             this.router.navigate(['/user/login']);
-        })
+        });
     }
 }

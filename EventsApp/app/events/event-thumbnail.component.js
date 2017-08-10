@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var EventThumbnailComponent = (function () {
     function EventThumbnailComponent() {
@@ -24,12 +25,11 @@ __decorate([
 ], EventThumbnailComponent.prototype, "event", void 0);
 EventThumbnailComponent = __decorate([
     core_1.Component({
-        selector: "event-thumbnail",
+        selector: 'event-thumbnail',
         moduleId: './app/events/',
         templateUrl: './event-thumbnail.component.html',
         styles: ["\n.pad-left {margin-left: 10px;}\n.well div {color: #bbb;}\n.thumbnail {min-height:230px}\n.red {color:#300 !important}\n.green {color:#030 !important}\n.bold { font-weight:bold}\n"],
-    }),
-    __metadata("design:paramtypes", [])
+    })
 ], EventThumbnailComponent);
 exports.EventThumbnailComponent = EventThumbnailComponent;
 //# sourceMappingURL=event-thumbnail.component.js.map

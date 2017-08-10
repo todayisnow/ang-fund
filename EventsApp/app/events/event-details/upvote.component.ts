@@ -1,5 +1,5 @@
-﻿import { Component, Input, Output , EventEmitter} from '@angular/core'
-import { EventService} from '../shared/event.service'
+﻿import { Component, Input, Output , EventEmitter} from '@angular/core';
+import { EventService} from '../shared/event.service';
 @Component({
     selector: 'upvote',
     moduleId:'./app/events/event-details/',
@@ -22,19 +22,19 @@ import { EventService} from '../shared/event.service'
  
 })
 export class UpVoteComponent {
-    @Input() count: number
-    //'based on input value you need to to stuff it can be ngOnChange or input setter'
+    @Input() count: number;
+    // 'based on input value you need to to stuff it can be ngOnChange or input setter'
     @Input() set voted(val) {
-        this.iconColor = val ? 'red' : 'white'
+        this.iconColor = val ? 'red' : 'white';
         
     }
-    iconColor: string 
-    @Output() vote = new EventEmitter()
+    iconColor: string; 
+    @Output() vote = new EventEmitter();
     constructor(private eventService: EventService) {
 
     }
     onClick() {
-        this.vote.emit({})
+        this.vote.emit({});
     }
 
 

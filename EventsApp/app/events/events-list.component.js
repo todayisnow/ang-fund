@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("./shared/index");
@@ -17,8 +18,8 @@ var EventsListComponent = (function () {
         this.route = route;
     }
     EventsListComponent.prototype.ngOnInit = function () {
-        //this.eventService.getEvents().subscribe(data => this.events = data)
-        //this.events = this.eventService.getEvents()
+        // this.eventService.getEvents().subscribe(data => this.events = data)
+        // this.events = this.eventService.getEvents()
         this.events = this.route.snapshot.data['events'];
     };
     return EventsListComponent;

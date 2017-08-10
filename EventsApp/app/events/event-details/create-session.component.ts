@@ -1,9 +1,9 @@
 ﻿
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { ISession, EventService, restrictedWords } from '../shared/index'
-import { TOASTR_TOCKEN, Toastr } from '../../common/toastr.service'
-import { Router } from '@angular/router'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ISession, EventService, restrictedWords } from '../shared/index';
+import { TOASTR_TOCKEN, Toastr } from '../../common/toastr.service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'create-session',
     moduleId: './app/events/event-details/',
@@ -20,40 +20,40 @@ em {float:right; color:#E05C65;padding-left:10px}
 `]
 })
 export class CreateSessionComponent implements OnInit {
-    @Output() newSession = new EventEmitter<ISession>()
-    @Output() cancelForm = new EventEmitter()
+    @Output() newSession = new EventEmitter<ISession>();
+    @Output() cancelForm = new EventEmitter();
 
-    sessionForm: FormGroup
-    name: FormControl
-    presenter: FormControl
-    duration: FormControl
-    level: FormControl
-    abstract: FormControl
+    sessionForm: FormGroup;
+    name: FormControl;
+    presenter: FormControl;
+    duration: FormControl;
+    level: FormControl;
+    abstract: FormControl;
     constructor(private router: Router,
         @Inject(TOASTR_TOCKEN) private toastr: Toastr
     ) {
 
     }
     ngOnInit() {
-        this.name = new FormControl('', Validators.required)
-        this.presenter = new FormControl('', Validators.required)
-        this.duration = new FormControl('', Validators.required)
-        this.level = new FormControl('', Validators.required)
-        this.abstract = new FormControl('', [Validators.required, Validators.maxLength(400), restrictedWords(['foo', 'BAR'])])
+        this.name = new FormControl('', Validators.required);
+        this.presenter = new FormControl('', Validators.required);
+        this.duration = new FormControl('', Validators.required);
+        this.level = new FormControl('', Validators.required);
+        this.abstract = new FormControl('', [Validators.required, Validators.maxLength(400), restrictedWords(['foo', 'BAR'])]);
         this.sessionForm = new FormGroup({
             name: this.name,
             presenter: this.presenter,
             duration: this.duration,
             level: this.level,
             abstract: this.abstract
-        })
+        });
     }
     // custom validator
-    //private restrictedWords(control: FormControl): { [key: string]: any } {
+    // private restrictedWords(control: FormControl): { [key: string]: any } {
         
 
     //    return control.value.includes('foo') ? { 'restrictedWords': [ 'foo','boo']}:null
-    //}
+    // }
     
     saveSession(formValue) {
         let session: ISession = {
@@ -64,12 +64,12 @@ export class CreateSessionComponent implements OnInit {
             level: formValue.level,
             abstract: formValue.abstract,
             voters: []
-        }
-        this.newSession.emit(session)
-        this.toastr.success("Session Saved!!!")
+        };
+        this.newSession.emit(session);
+        this.toastr.success('Session Saved!!!');
     }
     cancel() {
-        this.cancelForm.emit()
+        this.cancelForm.emit();
         
     }
 }

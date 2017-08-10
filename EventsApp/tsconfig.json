@@ -9,6 +9,7 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
+    "plugins": [ { "name": "tslint-language-service" } ],
     "typeRoots": [
       "./node_modules/@types/"
     ]

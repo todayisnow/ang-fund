@@ -1,6 +1,6 @@
-﻿import { Component, OnInit, Inject } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
-import { EventService, IEvent } from './shared/index'
+﻿import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EventService, IEvent } from './shared/index';
 
 @Component({
     selector: 'events-list',
@@ -18,7 +18,7 @@ import { EventService, IEvent } from './shared/index'
 })
 
 export class EventsListComponent implements OnInit {
-    events: IEvent[]
+    events: IEvent[];
     constructor(
         private eventService: EventService,
         private route: ActivatedRoute
@@ -27,9 +27,9 @@ export class EventsListComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.eventService.getEvents().subscribe(data => this.events = data)
-        //this.events = this.eventService.getEvents()
-        this.events = this.route.snapshot.data['events']
+        // this.eventService.getEvents().subscribe(data => this.events = data)
+        // this.events = this.eventService.getEvents()
+        this.events = this.route.snapshot.data['events'];
 
     }
 

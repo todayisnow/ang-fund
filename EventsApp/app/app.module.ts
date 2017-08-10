@@ -1,16 +1,16 @@
-﻿import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';//validation ,form, two way binding
-import { RouterModule } from '@angular/router';
-import { HttpModule} from '@angular/http'
-import { EventsAppComponent} from './events-app.component'
+﻿import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { HttpModule} from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';// validation ,form, two way binding
+import { BrowserModule } from '@angular/platform-browser';
+import { EventsAppComponent} from './events-app.component';
 import {
     EventsListComponent,
     EventThumbnailComponent,
-    CreateEventComponent,
+    CreateEventComponent,  
     CreateSessionComponent,
     SessionListComponent,
-    EventDetailsComponent,
+    EventDetailsComponent, 
     EventService,
     EventRouteActivator,
     EventListResolver,
@@ -19,10 +19,10 @@ import {
     VoterService,
     LocationValidator,
     EventResolver
-} from './events/index'
+} from './events/index';
 
-import { NavBarComponent } from './nav/nav-bar.component'
-import { Error404Component} from './error/404.component'
+import { NavBarComponent } from './nav/nav-bar.component';
+import { Error404Component} from './error/404.component';
 
 import {
     TOASTR_TOCKEN,
@@ -31,13 +31,13 @@ import {
     JQ_TOCKEN,
     SimpleModalComponent,
     ModalTriggerDirective
-} from './common/index'
-import { AuthService } from './user/auth.service'
+} from './common/index';
+import { AuthService } from './user/auth.service';
 
-import { appRoutes } from './routes'
+import { appRoutes } from './routes';
 
-declare let toastr: Toastr
-declare let jQuery: Object
+declare let toastr: Toastr;
+declare let jQuery: Object;
 
 @NgModule({
     imports: [
@@ -95,7 +95,7 @@ export class AppModule { }
 function chechDirtyState(component: CreateEventComponent) {
     
     if (component.isDirty)
-        return window.confirm('You have not saved this event, do you really want to cancel?')
+        return window.confirm('You have not saved this event, do you really want to cancel?');
     else
-        return true
+        return true;
 }

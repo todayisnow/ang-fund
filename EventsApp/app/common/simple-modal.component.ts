@@ -1,7 +1,7 @@
-﻿import { Component, Input, Inject ,ElementRef,ViewChild} from '@angular/core'
-import { JQ_TOCKEN } from './jQuery.service'
+﻿import { Component, Input, Inject ,ElementRef,ViewChild} from '@angular/core';
+import { JQ_TOCKEN } from './jQuery.service';
 @Component({
-    selector: 'simple-modal',
+    selector: 'simple-modal', 
     template: `
 <div id="{{elementId}}" class="modal fade" tabindex="-1" #modalContainer >
     <div class="modal-dialog">
@@ -25,19 +25,18 @@ import { JQ_TOCKEN } from './jQuery.service'
 })
 
 export class SimpleModalComponent {
-    @Input() title: string
-    @Input() elementId: string
-    @Input() closeOnBodyClick: string
-    @ViewChild('modalContainer') containerEl: ElementRef // hold a dom and Viewchildren if many with the same name and ContentChild if the elemnt inside ng-content
+    @Input() title: string;
+    @Input() elementId: string;
+    @Input() closeOnBodyClick: string;
+    @ViewChild('modalContainer') containerEl: ElementRef; // hold a dom and Viewchildren if many with the same name and ContentChild if the elemnt inside ng-content
     constructor(@Inject(JQ_TOCKEN) private $: any) {
 
     }
-    closeModal()
-    {
-        if (this.closeOnBodyClick.toLocaleLowerCase() === "true") {
-            this.$(this.containerEl.nativeElement).modal('hide')
+    closeModal() {
+        if (this.closeOnBodyClick.toLocaleLowerCase() === 'true') {
+            this.$(this.containerEl.nativeElement).modal('hide');
 
-            //this.$(`#${this.elementId}`).modal('hide')
+            // this.$(`#${this.elementId}`).modal('hide')
         }
     }
 }
