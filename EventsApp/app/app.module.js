@@ -21,6 +21,7 @@ var _404_component_1 = require("./error/404.component");
 var index_2 = require("./common/index");
 var auth_service_1 = require("./user/auth.service");
 var routes_1 = require("./routes");
+var ngx_pagination_1 = require("ngx-pagination");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,7 +34,8 @@ AppModule = __decorate([
             forms_1.FormsModule,
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot(routes_1.appRoutes),
-            http_1.HttpModule
+            http_1.HttpModule,
+            ngx_pagination_1.NgxPaginationModule
         ],
         declarations: [
             events_app_component_1.EventsAppComponent,

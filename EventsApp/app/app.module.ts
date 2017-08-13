@@ -36,7 +36,7 @@ import {
 import { AuthService } from './user/auth.service';
 
 import { appRoutes } from './routes';
-
+import { NgxPaginationModule } from 'ngx-pagination'
 declare let toastr: Toastr;
 declare let jQuery: Object;
 
@@ -46,7 +46,8 @@ declare let jQuery: Object;
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes),
-        HttpModule
+        HttpModule,
+NgxPaginationModule
         
     ],
     declarations: [

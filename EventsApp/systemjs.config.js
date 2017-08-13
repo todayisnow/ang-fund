@@ -26,6 +26,7 @@
       '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
       // other libraries
       'rxjs': 'npm:rxjs',
+      'ngx-pagination':'npm:ngx-pagination/dist/ngx-pagination.umd.js'
       //'angular2-image-upload': 'npm:angular2-image-upload/'
     },
     // packages tells the System loader how to load when no filename and/or no extension

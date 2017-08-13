@@ -7,8 +7,11 @@ export class EventResolver implements Resolve<IEvent> {
     constructor(private eventService: EventService, private router:Router) {
     }
     resolve(route: ActivatedRouteSnapshot) {
-      
-        return this.eventService.getEvent(route.params['id']);
+
+        return this.eventService.getEvent(route.params['id']).catch(() => {
+            this.router.navigate(['/404']);
+            return Observable.of(false)
+        });
     }
 
 

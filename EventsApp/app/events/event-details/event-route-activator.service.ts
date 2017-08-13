@@ -16,13 +16,8 @@ export class EventRouteActivator implements CanActivate {
             // abort current navigation
             return false;
         }
-        this.eventService.getEvent(id).subscribe((events) => {
-
-            return true;
-        }, error => {
-            this.router.navigate(['/404']);
-            return false;
-        });
-        
+       
+        return true;
     }
+ 
 }

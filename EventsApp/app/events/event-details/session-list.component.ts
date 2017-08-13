@@ -11,9 +11,16 @@ import { VoterService } from './voter.service';
     templateUrl: './session-list.component.html',
     styles: [`
 collapsible-well h6 {margin-top:-5px;margin-buttom:10px}
+.my-pagination /deep/ .ngx-pagination  {
+    color: #fff;
+  }
+.my-pagination /deep/ .ngx-pagination .current {
+    color: #df691a;
+  }
 `]
 })
 export class SessionListComponent implements OnChanges {
+    p: number = 1;
     @Input() sessions: ISession[];
     visibleSession: ISession[] = [];
     @Input() filterBy: string;
