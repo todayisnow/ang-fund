@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace EventsApi
@@ -21,7 +22,17 @@ namespace EventsApi
             routeTemplate: "api/{controller}/{id}",
             defaults: new { id = RouteParameter.Optional }
             );
+            
+            config.Routes.MapHttpRoute(
+            name: "DefaultRemoteProcedureCall",
+            routeTemplate: "rpc/{controller}/{action}/{id}",
+            defaults: new { id = RouteParameter.Optional }
+            );
 
+
+            //sending mediatype in querystring
+            config.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "json", "application/json"));
+       
             // convert properties to camalCase InSteadOf PascalCase
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             //Ignore Null properties

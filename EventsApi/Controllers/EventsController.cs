@@ -337,14 +337,33 @@ namespace EventsApi.Controllers
         {
             return _events.FirstOrDefault(m=>m.Id == id);
         }
-
+        
         public bool Post(EventModel model)
         {
-            model.Id = _events.Max(m => m.Id) + 1;
-            _events.Add(model);
+            if (model.Id == 0)
+            {
+                model.Id = _events.Max(m => m.Id) + 1;
+                _events.Add(model);
+            }
+            else
+            {
+                var x = _events.First(m => m.Id == model.Id);
+                x = model;
+            }
             return true;
         }
-
+        public bool Put(EventModel model)
+        {
+            return true;
+        }
+        public bool Delete(int id)
+        {
+            return true;
+        }
+        public bool GetV(int id)
+        {
+            return true;
+        }
 
 
     }
