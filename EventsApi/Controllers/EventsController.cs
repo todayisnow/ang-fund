@@ -360,10 +360,7 @@ namespace EventsApi.Controllers
         {
             return true;
         }
-        public bool GetV(int id)
-        {
-            return true;
-        }
+      
 
 
     }
