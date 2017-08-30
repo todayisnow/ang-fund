@@ -1,0 +1,341 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file=".\Shared.ttinclude"#>
+<#@ output extension=".cs"#>
+
+<#
+
+const string inputFile = @"..\Events.Ef\MyEf.edmx";
+const string entityNameSuffix = @"Repository";
+var pluralizationService = PluralizationService.CreateService(new CultureInfo("en-US"));
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var region = new CodeRegion(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
+var codeStringGenerator = new RepositoryGenerator(code, typeMapper, ef, pluralizationService);
+var container = itemCollection.OfType<EntityContainer>().FirstOrDefault();
+
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+{
+    return string.Empty;
+}
+
+WriteHeader(codeStringGenerator, fileManager);
+
+var baseTypes = typeMapper.GetItemsToGenerate<EntityType>(itemCollection).Where(e => e.BaseType != null).Select(e => e.BaseType);
+
+foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection).Where(e => e.BaseType == null))
+{
+    fileManager.StartNewFile(entity.Name + entityNameSuffix + ".cs");
+#>
+<#=codeStringGenerator.UsingDirectives(false, "System.Linq", "System.Linq.Expressions", "System.Data.Entity", "System.Collections.Generic", "System.Runtime.Serialization", "System.ComponentModel.DataAnnotations", "System.Threading.Tasks",  "Events.EF", "Events.Entities","Events.Common")#>
+<#
+    BeginNamespace(code);
+	var lookupEntityMetadata = codeStringGenerator.GetLookupEntityMetadata(entity);
+#>
+public partial class <#=code.Escape(entity) + entityNameSuffix#> : Repository<<#=code.Escape(entity)#>><#=lookupEntityMetadata == null ? "" : string.Format(", ILookupRepository<{0}>", code.Escape(entity))#>
+{
+<#
+    //var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
+    //var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entity);
+    //var complexProperties = typeMapper.GetComplexProperties(entity);
+    //PushIndent("\t");
+#>
+
+	public <#=code.Escape(entity)#>Repository(DbContext ctx, bool noTracking = true) : base(ctx, noTracking)
+	{
+	}
+		
+		
+	public IEnumerable<<#=code.Escape(entity)#>> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>(params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
+	{
+		return _iRepository.FetchAll(paths);
+	}
+
+	public IEnumerable<<#=code.Escape(entity)#>> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>(Func<IQueryable<<#=code.Escape(entity)#>>, IOrderedQueryable<<#=code.Escape(entity)#>>> orderBy, int pageSize, int pageNumber, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
+	{
+        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
+	}
+
+	public IEnumerable<<#=code.Escape(entity)#>> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
+	{
+		return _iRepository.FetchMany(predicate, paths);
+	}
+
+    public IEnumerable<<#=code.Escape(entity)#>> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, Func<IQueryable<<#=code.Escape(entity)#>>, IOrderedQueryable<<#=code.Escape(entity)#>>> orderBy, int pageSize, int pageNumber, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
+    {
+        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
+    }
+
+	public <#=code.Escape(entity)#> Fetch<#=code.Escape(entity)#>(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
+	{
+		return _iRepository.Fetch(predicate, paths);
+	}
+
+	
+
+	public <#=code.Escape(entity)#> Fetch<#=code.Escape(entity)#>(params object[] keys)
+	{
+		return _iRepository.Fetch(keys);
+	}
+
+	
+
+	public IEnumerable<<#=code.Escape(entity)#>> SqlQuery(string esqlText, object[] Parameters)
+	{
+		return _iRepository.SqlQuery(esqlText, Parameters);
+	}
+
+	public void Add<#=code.Escape(entity)#>(<#=code.Escape(entity)#> entity)
+	{
+		 _iRepository.Add(entity);
+	}
+
+	
+
+	public void Update<#=code.Escape(entity)#>(<#=code.Escape(entity)#> entity)
+	{
+		 _iRepository.Update(entity, <#=codeStringGenerator.GetEntitySelectorFunc(entity)#>);
+	}
+
+	
+
+	public void Delete<#=code.Escape(entity)#>(<#=code.Escape(entity)#> entity)
+	{
+		 _iRepository.Delete(entity, <#=codeStringGenerator.GetEntitySelectorFunc(entity)#>);
+	}
+
+	
+
+<#
+	if(baseTypes.Any(e=> e.Name == entity.Name))
+	{
+#>
+	#region Base type specific operations
+	public IQueryable<T> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T>(params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
+	{
+		return _iRepository.FetchAllOfType(paths);
+	}
+
+	public IQueryable<T> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T, TKey>(Expression<Func<T, TKey>> orderBy, int pageSize, int pageNumber, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
+	{
+        return _iRepository.FetchAllOfType(orderBy, pageSize, pageNumber, paths);
+	}
+
+	public IQueryable<T> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
+	{
+		return _iRepository.FetchManyOfType(predicate, paths);
+	}
+
+    public IQueryable<T> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T, TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderBy, int pageSize, int pageNumber, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
+    {
+        return _iRepository.FetchManyOfType(predicate, orderBy, pageSize, pageNumber, paths);
+    }
+
+	public T Fetch<#=code.Escape(entity)#>OfType<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
+	{
+		return _iRepository.FetchOfType(predicate, paths);
+	}
+
+	
+	#endregion
+<#
+	}
+
+	if(lookupEntityMetadata != null)
+	{
+#>
+	#region ILookupRepository<T> contract
+    public IEnumerable<LookupEntity> FetchAsLookup(Language? language = null, int? pageSize = null, int? pageNumber = null)
+    {
+        return FetchAsLookup(null, language, pageSize, pageNumber);
+    }
+
+    
+
+    public IEnumerable<LookupEntity> FetchAsLookup(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, Language? language,  int? pageSize = null, int? pageNumber = null)
+	{
+        var query = EntityQuery.AsQueryable();
+            
+        if (predicate != null)
+            query = query.Where(predicate);
+        var lookupQuery = ((language ?? Language.Ar) == Language.Ar) ?
+            query.Select(e => new { Id = e.<#=lookupEntityMetadata.IdProperty#>, Name = e.<#=lookupEntityMetadata.NameArProperty#> }) : query.Select(e => new { Id = e.<#=lookupEntityMetadata.IdProperty#>, Name = e.<#=lookupEntityMetadata.NameEnProperty#> });
+        if (pageSize.HasValue && pageNumber.HasValue)
+            lookupQuery = lookupQuery.OrderBy(e => e.Name).Skip((pageNumber.Value - 1) * pageSize.Value).Take(pageSize.Value);
+        var result = lookupQuery.ToList();
+        return result.Select(e => new LookupEntity { Id = Convert.ToInt32(e.Id), Name = Convert.ToString(e.Name) });
+    }
+	
+	
+	#endregion
+<#
+	}
+#>
+<# //PopIndent();#>
+}
+
+<#
+    EndNamespace(code);
+}
+
+fileManager.StartNewFile("FunctionHelperRepository.Generated.cs");
+#>
+<#=codeStringGenerator.UsingDirectives(false, "System.Collections.Generic","System.Data.Entity.Core.Objects", codeStringGenerator.GetNameSpace("Ef"), codeStringGenerator.GetNameSpace("Entities"))#>
+<#
+BeginNamespace(code);
+#>
+public partial class FunctionHelperRepository
+{
+<#
+	foreach (var edmFunction in container.FunctionImports)
+	{
+#>
+    <#=codeStringGenerator.GenerateEdmFunction(edmFunction, code.Escape(container))#>
+<#
+	}
+#>
+}
+<#
+EndNamespace(code);
+
+fileManager.Process();
+
+#>
+<#+
+
+public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFrameworkTemplateFileManager fileManager)
+{
+    fileManager.StartHeader();
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine1")#>
+//
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine2")#>
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine3")#>
+// </auto-generated>
+//------------------------------------------------------------------------------
+<#=codeStringGenerator.UsingDirectives(true, "System.Collections.Generic", "System.Runtime.Serialization", "System.ComponentModel.DataAnnotations")#>
+<#+
+    fileManager.EndBlock();
+}
+
+public void BeginNamespace(CodeGenerationTools code)
+{
+    var codeNamespace = code.VsNamespaceSuggestion();
+    if (!String.IsNullOrEmpty(codeNamespace))
+    {
+#>
+namespace <#=code.EscapeNamespace(codeNamespace)#>
+{
+<#+
+        PushIndent("\t");
+    }
+}
+
+public void EndNamespace(CodeGenerationTools code)
+{
+    if (!String.IsNullOrEmpty(code.VsNamespaceSuggestion()))
+    {
+        PopIndent();
+#>
+}
+<#+
+    }
+}
+
+public const string TemplateId = "RepositoryTemplate";
+
+public class RepositoryGenerator : CodeStringGenerator
+	{
+		public RepositoryGenerator(CodeGenerationTools code, TypeMapper typeMapper, MetadataTools ef, PluralizationService pluralizationService)
+			: base(code, typeMapper, ef, pluralizationService)
+		{
+		}
+
+		public string GenerateEdmFunction(EdmFunction edmFunction, string dbContextName)
+		{
+			var sb = new StringBuilder();
+			var parametersWithTypes = new StringBuilder();
+			var parameters = new StringBuilder();
+			if(edmFunction.Parameters.Any())
+			{
+				foreach(var param in edmFunction.Parameters)
+				{
+
+					//var outParam  = new ObjectParameter("TotalCount",typeof(Nullable<Int32>));
+					if(param.Mode == System.Data.Entity.Core.Metadata.Edm.ParameterMode.InOut)
+					{
+						parametersWithTypes.AppendFormat(CultureInfo.InvariantCulture, "{0} {1}, ", "ObjectParameter " , param.Name);
+						parameters.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", param.Name);
+					}else{
+						parametersWithTypes.AppendFormat(CultureInfo.InvariantCulture, "{0} {1}, ", _typeMapper.GetTypeName(param.TypeUsage), param.Name);
+						parameters.AppendFormat(CultureInfo.InvariantCulture, "{0}, ", param.Name);
+					}
+				}
+				parametersWithTypes.Remove(parametersWithTypes.Length - 2, 2);
+				parameters.Remove(parameters.Length - 2, 2);
+			}
+			sb.AppendFormat(CultureInfo.InvariantCulture, "public {0} {1}({2}){3}",
+				edmFunction.ReturnParameter==null ? "void" : _typeMapper.GetTypeName(edmFunction.ReturnParameter.TypeUsage).Replace("ICollection", "IEnumerable"),
+				_code.Escape(edmFunction),
+				parametersWithTypes.ToString(),
+				Environment.NewLine);
+			sb.AppendLine("\t{");
+			if(edmFunction.ReturnParameter==null )
+			sb.AppendFormat(CultureInfo.InvariantCulture, "\t\t ContextManager.DbContext.{0}({1});{2}", _code.Escape(edmFunction), parameters.ToString(), Environment.NewLine);
+			else
+			sb.AppendFormat(CultureInfo.InvariantCulture, "\t\treturn ContextManager.DbContext.{0}({1});{2}", _code.Escape(edmFunction), parameters.ToString(), Environment.NewLine);
+
+			sb.AppendLine("\t}");
+			
+			return sb.ToString();
+		}
+
+		public string GetEntitySelectorFunc(EntityType entity)
+		{
+			var entitySelectorFunc = entity.KeyMembers.Aggregate("e => ", (s, e) => string.Format("{0}e.{1} == entity.{1} && ", s, e.Name), s => s.Remove(s.Length - 4));
+			return entitySelectorFunc.Length > 4 ? entitySelectorFunc : "null";
+		}
+
+		public LookupEntityMetadata GetLookupEntityMetadata(EntityType entity)
+		{
+			try
+			{
+				var simpleProperties = _typeMapper.GetSimpleProperties(entity);
+				if (simpleProperties.Any())
+				{
+					if(entity.Documentation != null && entity.Documentation.Summary.Contains("[LookupEntity]"))
+						return new LookupEntityMetadata {
+							IdProperty = simpleProperties.Single(p=> p.Documentation != null && p.Documentation.Summary != null && p.Documentation.Summary.Contains("[LookupEntity_Id]")).Name,
+							NameArProperty = simpleProperties.Single(p=> p.Documentation != null && p.Documentation.Summary != null && p.Documentation.Summary.Contains("[LookupEntity_NameAr]")).Name,
+							NameEnProperty = simpleProperties.Single(p=> p.Documentation != null && p.Documentation.Summary != null && p.Documentation.Summary.Contains("[LookupEntity_NameEn]")).Name
+						};
+					else if(simpleProperties.Any(p=> p.Name == "Id") && simpleProperties.Any(p=> p.Name == "NameAr") && simpleProperties.Any(p=> p.Name == "NameEn"))
+						return new LookupEntityMetadata {
+							IdProperty = "Id",
+							NameArProperty = "NameAr",
+							NameEnProperty = "NameEn"
+						};
+				}
+				return null;
+			}
+			catch
+			{
+				throw new Exception("Error extracting Lookup metadata information!");
+			}
+		}
+	}
+
+	public class LookupEntityMetadata
+	{
+		public string IdProperty { get; set; }
+		public string NameArProperty { get; set; }
+		public string NameEnProperty { get; set; }
+	}
+#>
