@@ -17,6 +17,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Events.Common", "Events.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Entities", "Events.Entities\Events.Entities.csproj", "{AEC005CC-1028-4A24-B3A0-785E5D8F53AA}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Events.Database", "Events.Database\Events.Database.sqlproj", "{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Events.Common\Events.Common.projitems*{40b13eb8-d643-4789-a354-ec8ac862933b}*SharedItemsImports = 13
@@ -50,6 +52,12 @@ Global
 		{AEC005CC-1028-4A24-B3A0-785E5D8F53AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEC005CC-1028-4A24-B3A0-785E5D8F53AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEC005CC-1028-4A24-B3A0-785E5D8F53AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6AADA5D-CFCD-4327-82C3-BA15D5A50C0A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
