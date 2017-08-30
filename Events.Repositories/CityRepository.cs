@@ -21,7 +21,7 @@ using Events.Common;
 
 namespace Events.Repositories
 {
-	public partial class CityRepository : Repository<City>
+	public partial class CityRepository : Repository<City>, ILookupRepository<City>
 	{
 	
 		public CityRepository(DbContext ctx, bool noTracking = true) : base(ctx, noTracking)
@@ -38,8 +38,8 @@ namespace Events.Repositories
 		{
 	        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 		}
-        
-        public IEnumerable<City> FetchManyCities(Expression<Func<City, bool>> predicate, params Expression<Func<City, object>>[] paths)
+	
+		public IEnumerable<City> FetchManyCities(Expression<Func<City, bool>> predicate, params Expression<Func<City, object>>[] paths)
 		{
 			return _iRepository.FetchMany(predicate, paths);
 		}
@@ -89,6 +89,30 @@ namespace Events.Repositories
 	
 		
 	
+		#region ILookupRepository<T> contract
+	    public IEnumerable<LookupEntity> FetchAsLookup(Language? language = null, int? pageSize = null, int? pageNumber = null)
+	    {
+	        return FetchAsLookup(null, language, pageSize, pageNumber);
+	    }
+	
+	    
+	
+	    public IEnumerable<LookupEntity> FetchAsLookup(Expression<Func<City, bool>> predicate, Language? language,  int? pageSize = null, int? pageNumber = null)
+		{
+	        var query = EntityQuery.AsQueryable();
+	            
+	        if (predicate != null)
+	            query = query.Where(predicate);
+	        var lookupQuery = ((language ?? Language.Ar) == Language.Ar) ?
+	            query.Select(e => new { Id = e.Id, Name = e.NameAr }) : query.Select(e => new { Id = e.Id, Name = e.NameEn });
+	        if (pageSize.HasValue && pageNumber.HasValue)
+	            lookupQuery = lookupQuery.OrderBy(e => e.Name).Skip((pageNumber.Value - 1) * pageSize.Value).Take(pageSize.Value);
+	        var result = lookupQuery.ToList();
+	        return result.Select(e => new LookupEntity { Id = Convert.ToInt32(e.Id), Name = Convert.ToString(e.Name) });
+	    }
+		
+		
+		#endregion
 	}
 	
 }

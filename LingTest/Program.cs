@@ -20,14 +20,9 @@ namespace LingTest
             try
             {
 
-                var u = new UnitOfWork(new LinqTestEntities());
+                var u = new UnitOfWork(new EventsEntities());
                 var f = DateTime.Now.Ticks;
-                u.Cities.AddCity(new City
-                {
-                    Name = "ddd",
-                    CountryId = 55
-                });
-                u.Complete();
+                u.Cities.FetchAllCities();
                 Console.WriteLine(DateTime.Now.Ticks - f);
            
             }

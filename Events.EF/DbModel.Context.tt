@@ -2,7 +2,7 @@
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@
  output extension=".cs"#><#
 
-const string inputFile = @"MyEF.edmx";
+const string inputFile = @"DbModel.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
@@ -43,6 +43,8 @@ namespace <#=code.EscapeNamespace(codeNamespace)#>
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using Events.EF;
+    using System.Data.Entity.Infrastructure.Interception;
 <#
 if (container.FunctionImports.Any())
 {
@@ -58,6 +60,8 @@ using System.Linq;
     public <#=code.Escape(container)#>()
         : base("name=<#=container.Name#>")
     {
+		this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            DbInterception.Add(new LogCommandInterceptor());
 <#
 if (!loader.IsLazyLoadingEnabled(container))
 {
@@ -78,7 +82,6 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
     }
 }
 #>
-	this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)

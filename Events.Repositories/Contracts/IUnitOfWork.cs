@@ -11,7 +11,7 @@ namespace Events.Repositories
     public interface IUnitOfWork : IDisposable 
     {
         CityRepository Cities { get; }
-        GenderRepository Gender { get; }
+     
                
 
         int SaveChanges();

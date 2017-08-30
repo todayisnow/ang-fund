@@ -21,68 +21,68 @@ using Events.Common;
 
 namespace Events.Repositories
 {
-	public partial class CountryRepository : Repository<Country>, ILookupRepository<Country>
+	public partial class LevelRepository : Repository<Level>, ILookupRepository<Level>
 	{
 	
-		public CountryRepository(DbContext ctx, bool noTracking = true) : base(ctx, noTracking)
+		public LevelRepository(DbContext ctx, bool noTracking = true) : base(ctx, noTracking)
 		{
 		}
 			
 			
-		public IEnumerable<Country> FetchAllCountries(params Expression<Func<Country, object>>[] paths)
+		public IEnumerable<Level> FetchAllLevels(params Expression<Func<Level, object>>[] paths)
 		{
 			return _iRepository.FetchAll(paths);
 		}
 	
-		public IEnumerable<Country> FetchAllCountries(Func<IQueryable<Country>, IOrderedQueryable<Country>> orderBy, int pageSize, int pageNumber, params Expression<Func<Country, object>>[] paths)
+		public IEnumerable<Level> FetchAllLevels(Func<IQueryable<Level>, IOrderedQueryable<Level>> orderBy, int pageSize, int pageNumber, params Expression<Func<Level, object>>[] paths)
 		{
 	        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 		}
 	
-		public IEnumerable<Country> FetchManyCountries(Expression<Func<Country, bool>> predicate, params Expression<Func<Country, object>>[] paths)
+		public IEnumerable<Level> FetchManyLevels(Expression<Func<Level, bool>> predicate, params Expression<Func<Level, object>>[] paths)
 		{
 			return _iRepository.FetchMany(predicate, paths);
 		}
 	
-	    public IEnumerable<Country> FetchManyCountries(Expression<Func<Country, bool>> predicate, Func<IQueryable<Country>, IOrderedQueryable<Country>> orderBy, int pageSize, int pageNumber, params Expression<Func<Country, object>>[] paths)
+	    public IEnumerable<Level> FetchManyLevels(Expression<Func<Level, bool>> predicate, Func<IQueryable<Level>, IOrderedQueryable<Level>> orderBy, int pageSize, int pageNumber, params Expression<Func<Level, object>>[] paths)
 	    {
 	        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
 	    }
 	
-		public Country FetchCountry(Expression<Func<Country, bool>> predicate, params Expression<Func<Country, object>>[] paths)
+		public Level FetchLevel(Expression<Func<Level, bool>> predicate, params Expression<Func<Level, object>>[] paths)
 		{
 			return _iRepository.Fetch(predicate, paths);
 		}
 	
 		
 	
-		public Country FetchCountry(params object[] keys)
+		public Level FetchLevel(params object[] keys)
 		{
 			return _iRepository.Fetch(keys);
 		}
 	
 		
 	
-		public IEnumerable<Country> SqlQuery(string esqlText, object[] Parameters)
+		public IEnumerable<Level> SqlQuery(string esqlText, object[] Parameters)
 		{
 			return _iRepository.SqlQuery(esqlText, Parameters);
 		}
 	
-		public void AddCountry(Country entity)
+		public void AddLevel(Level entity)
 		{
 			 _iRepository.Add(entity);
 		}
 	
 		
 	
-		public void UpdateCountry(Country entity)
+		public void UpdateLevel(Level entity)
 		{
 			 _iRepository.Update(entity, e => e.Id == entity.Id);
 		}
 	
 		
 	
-		public void DeleteCountry(Country entity)
+		public void DeleteLevel(Level entity)
 		{
 			 _iRepository.Delete(entity, e => e.Id == entity.Id);
 		}
@@ -97,7 +97,7 @@ namespace Events.Repositories
 	
 	    
 	
-	    public IEnumerable<LookupEntity> FetchAsLookup(Expression<Func<Country, bool>> predicate, Language? language,  int? pageSize = null, int? pageNumber = null)
+	    public IEnumerable<LookupEntity> FetchAsLookup(Expression<Func<Level, bool>> predicate, Language? language,  int? pageSize = null, int? pageNumber = null)
 		{
 	        var query = EntityQuery.AsQueryable();
 	            

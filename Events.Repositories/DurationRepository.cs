@@ -21,68 +21,68 @@ using Events.Common;
 
 namespace Events.Repositories
 {
-	public partial class GenderRepository : Repository<Gender>, ILookupRepository<Gender>
+	public partial class DurationRepository : Repository<Duration>, ILookupRepository<Duration>
 	{
 	
-		public GenderRepository(DbContext ctx, bool noTracking = true) : base(ctx, noTracking)
+		public DurationRepository(DbContext ctx, bool noTracking = true) : base(ctx, noTracking)
 		{
 		}
 			
 			
-		public IEnumerable<Gender> FetchAllGenders(params Expression<Func<Gender, object>>[] paths)
+		public IEnumerable<Duration> FetchAllDurations(params Expression<Func<Duration, object>>[] paths)
 		{
 			return _iRepository.FetchAll(paths);
 		}
 	
-		public IEnumerable<Gender> FetchAllGenders(Func<IQueryable<Gender>, IOrderedQueryable<Gender>> orderBy, int pageSize, int pageNumber, params Expression<Func<Gender, object>>[] paths)
+		public IEnumerable<Duration> FetchAllDurations(Func<IQueryable<Duration>, IOrderedQueryable<Duration>> orderBy, int pageSize, int pageNumber, params Expression<Func<Duration, object>>[] paths)
 		{
 	        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 		}
 	
-		public IEnumerable<Gender> FetchManyGenders(Expression<Func<Gender, bool>> predicate, params Expression<Func<Gender, object>>[] paths)
+		public IEnumerable<Duration> FetchManyDurations(Expression<Func<Duration, bool>> predicate, params Expression<Func<Duration, object>>[] paths)
 		{
 			return _iRepository.FetchMany(predicate, paths);
 		}
 	
-	    public IEnumerable<Gender> FetchManyGenders(Expression<Func<Gender, bool>> predicate, Func<IQueryable<Gender>, IOrderedQueryable<Gender>> orderBy, int pageSize, int pageNumber, params Expression<Func<Gender, object>>[] paths)
+	    public IEnumerable<Duration> FetchManyDurations(Expression<Func<Duration, bool>> predicate, Func<IQueryable<Duration>, IOrderedQueryable<Duration>> orderBy, int pageSize, int pageNumber, params Expression<Func<Duration, object>>[] paths)
 	    {
 	        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
 	    }
 	
-		public Gender FetchGender(Expression<Func<Gender, bool>> predicate, params Expression<Func<Gender, object>>[] paths)
+		public Duration FetchDuration(Expression<Func<Duration, bool>> predicate, params Expression<Func<Duration, object>>[] paths)
 		{
 			return _iRepository.Fetch(predicate, paths);
 		}
 	
 		
 	
-		public Gender FetchGender(params object[] keys)
+		public Duration FetchDuration(params object[] keys)
 		{
 			return _iRepository.Fetch(keys);
 		}
 	
 		
 	
-		public IEnumerable<Gender> SqlQuery(string esqlText, object[] Parameters)
+		public IEnumerable<Duration> SqlQuery(string esqlText, object[] Parameters)
 		{
 			return _iRepository.SqlQuery(esqlText, Parameters);
 		}
 	
-		public void AddGender(Gender entity)
+		public void AddDuration(Duration entity)
 		{
 			 _iRepository.Add(entity);
 		}
 	
 		
 	
-		public void UpdateGender(Gender entity)
+		public void UpdateDuration(Duration entity)
 		{
 			 _iRepository.Update(entity, e => e.Id == entity.Id);
 		}
 	
 		
 	
-		public void DeleteGender(Gender entity)
+		public void DeleteDuration(Duration entity)
 		{
 			 _iRepository.Delete(entity, e => e.Id == entity.Id);
 		}
@@ -97,7 +97,7 @@ namespace Events.Repositories
 	
 	    
 	
-	    public IEnumerable<LookupEntity> FetchAsLookup(Expression<Func<Gender, bool>> predicate, Language? language,  int? pageSize = null, int? pageNumber = null)
+	    public IEnumerable<LookupEntity> FetchAsLookup(Expression<Func<Duration, bool>> predicate, Language? language,  int? pageSize = null, int? pageNumber = null)
 		{
 	        var query = EntityQuery.AsQueryable();
 	            

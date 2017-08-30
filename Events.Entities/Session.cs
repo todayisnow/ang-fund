@@ -12,21 +12,26 @@ namespace Events.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class City
+    public partial class Session
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public City()
+        public Session()
         {
-            this.Locations = new HashSet<Location>();
+            this.Voters = new HashSet<Voter>();
         }
     
         public int Id { get; set; }
-        public string NameAr { get; set; }
-        public string NameEn { get; set; }
-        public int CountryId { get; set; }
+        public string Name { get; set; }
+        public string Presenter { get; set; }
+        public int DurationId { get; set; }
+        public int LevelId { get; set; }
+        public string Abstract { get; set; }
+        public int EventId { get; set; }
     
-        public virtual Country Country { get; set; }
+        public virtual Duration Duration { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual Level Level { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<Voter> Voters { get; set; }
     }
 }

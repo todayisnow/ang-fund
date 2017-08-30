@@ -52,16 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICityRepository.cs" />
-    <Compile Include="MyEF.Context.cs">
+    <Compile Include="DbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MyEF.Context.tt</DependentUpon>
+      <DependentUpon>DbModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="MyEF.Designer.cs">
+    <Compile Include="DbModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MyEF.edmx</DependentUpon>
+      <DependentUpon>DbModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="LogCommandInterceptor.cs" />
     <Compile Include="OneLineFormatter.cs" />
@@ -69,12 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="MyEF.edmx">
+    <EntityDeploy Include="DbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyEF.Designer.cs</LastGenOutput>
+      <LastGenOutput>DbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="MyEF.edmx.diagram">
-      <DependentUpon>MyEF.edmx</DependentUpon>
+    <None Include="DbModel.edmx.diagram">
+      <DependentUpon>DbModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -88,10 +87,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MyEF.Context.tt">
+    <Content Include="DbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyEF.edmx</DependentUpon>
-      <LastGenOutput>MyEF.Context.cs</LastGenOutput>
+      <DependentUpon>DbModel.edmx</DependentUpon>
+      <LastGenOutput>DbModel.Context.cs</LastGenOutput>
       <CustomToolNamespace>Events.Entities</CustomToolNamespace>
     </Content>
   </ItemGroup>

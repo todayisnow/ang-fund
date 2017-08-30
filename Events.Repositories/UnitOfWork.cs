@@ -13,10 +13,10 @@ namespace Events.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly LinqTestEntities db;
+        private readonly EventsEntities db;
 
 
-        public UnitOfWork(LinqTestEntities dbContext)
+        public UnitOfWork(EventsEntities dbContext)
         {
             db = dbContext;
         }
@@ -35,21 +35,6 @@ namespace Events.Repositories
                 return this._Cities ;
             }
         }
-        private GenderRepository _Gender;
-
-        public GenderRepository Gender
-        {
-            get
-            {
-
-                if (this._Gender == null)
-                {
-                    this._Gender = new GenderRepository(db, noTracking: true);
-                }
-                return this._Gender;
-            }
-        }
-
         public int Complete()
         {
             int result = 0;

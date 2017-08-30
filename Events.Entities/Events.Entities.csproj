@@ -56,18 +56,36 @@
     <Compile Include="Country.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Duration.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Gender.cs">
+    <Compile Include="Event.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Level.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="LookupEntity.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Voter.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

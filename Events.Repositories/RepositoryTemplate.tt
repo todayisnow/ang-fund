@@ -5,7 +5,7 @@
 
 <#
 
-const string inputFile = @"..\Events.Ef\MyEf.edmx";
+const string inputFile = @"..\Events.Ef\DbModel.edmx";
 const string entityNameSuffix = @"Repository";
 var pluralizationService = PluralizationService.CreateService(new CultureInfo("en-US"));
 var textTransform = DynamicTextTransformation.Create(this);

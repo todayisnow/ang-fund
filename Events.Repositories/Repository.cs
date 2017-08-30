@@ -17,7 +17,7 @@ namespace Events.Repositories
         #region Constructors and Factories
         public Repository(DbContext ctx, bool noTracking = true)
         {
-            _ctx = ctx as LinqTestEntities;
+            _ctx = ctx as EventsEntities;
             _iRepository = this;
             NoTracking = noTracking;
         }
@@ -25,7 +25,7 @@ namespace Events.Repositories
 
         #region Fields
 
-        protected readonly LinqTestEntities _ctx;
+        protected readonly EventsEntities _ctx;
         private DbSet<TEntity> _dbSet;
         protected readonly IRepository<TEntity> _iRepository;
         protected bool NoTracking { get; private set; }

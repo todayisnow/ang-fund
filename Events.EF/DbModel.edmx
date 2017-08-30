@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EventsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NameEn" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NameEn" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Duration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NameEn" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="OnlineUrl" Type="nvarchar" MaxLength="250" />
+          <Property Name="LocationId" Type="int" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NameEn" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Presenter" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DurationId" Type="int" Nullable="false" />
+          <Property Name="LevelId" Type="int" Nullable="false" />
+          <Property Name="Abstract" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Voter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SessionId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_City_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Location_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_Duration">
+          <End Role="Duration" Type="Self.Duration" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duration">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="DurationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_Level">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voter_Session">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="Voter" Type="Self.Voter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Voter">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voter_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Voter" Type="Self.Voter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Voter">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EventsModelStoreContainer">
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Duration" EntityType="Self.Duration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voter" EntityType="Self.Voter" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_City_Country" Association="Self.FK_City_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Location" Association="Self.FK_Event_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Location_City" Association="Self.FK_Location_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Duration" Association="Self.FK_Session_Duration">
+            <End Role="Duration" EntitySet="Duration" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Event" Association="Self.FK_Session_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Level" Association="Self.FK_Session_Level">
+            <End Role="Level" EntitySet="Level" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voter_Session" Association="Self.FK_Voter_Session">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="Voter" EntitySet="Voter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voter_User" Association="Self.FK_Voter_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Voter" EntitySet="Voter" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EventsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_City_Country" FromRole="City" ToRole="Country" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Location_City" FromRole="City" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cities" Relationship="Self.FK_City_Country" FromRole="Country" ToRole="City" />
+        </EntityType>
+        <EntityType Name="Duration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK_Session_Duration" FromRole="Duration" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OnlineUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LocationId" Type="Int32" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Event_Location" FromRole="Event" ToRole="Location" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK_Session_Event" FromRole="Event" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK_Session_Level" FromRole="Level" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Location_City" FromRole="Location" ToRole="City" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Event_Location" FromRole="Location" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Presenter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DurationId" Type="Int32" Nullable="false" />
+          <Property Name="LevelId" Type="Int32" Nullable="false" />
+          <Property Name="Abstract" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Duration" Relationship="Self.FK_Session_Duration" FromRole="Session" ToRole="Duration" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Session_Event" FromRole="Session" ToRole="Event" />
+          <NavigationProperty Name="Level" Relationship="Self.FK_Session_Level" FromRole="Session" ToRole="Level" />
+          <NavigationProperty Name="Voters" Relationship="Self.FK_Voter_Session" FromRole="Session" ToRole="Voter" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Voters" Relationship="Self.FK_Voter_User" FromRole="User" ToRole="Voter" />
+        </EntityType>
+        <EntityType Name="Voter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Session" Relationship="Self.FK_Voter_Session" FromRole="Voter" ToRole="Session" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Voter_User" FromRole="Voter" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_City_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Location_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_Duration">
+          <End Role="Duration" Type="Self.Duration" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duration">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="DurationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_Level">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voter_Session">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="Voter" Type="Self.Voter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Voter">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voter_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Voter" Type="Self.Voter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Voter">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EventsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Durations" EntityType="Self.Duration" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Levels" EntityType="Self.Level" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Sessions" EntityType="Self.Session" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Voters" EntityType="Self.Voter" />
+          <AssociationSet Name="FK_City_Country" Association="Self.FK_City_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Location_City" Association="Self.FK_Location_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Location" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Duration" Association="Self.FK_Session_Duration">
+            <End Role="Duration" EntitySet="Durations" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Location" Association="Self.FK_Event_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Event" Association="Self.FK_Session_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Level" Association="Self.FK_Session_Level">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voter_Session" Association="Self.FK_Voter_Session">
+            <End Role="Session" EntitySet="Sessions" />
+            <End Role="Voter" EntitySet="Voters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voter_User" Association="Self.FK_Voter_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Voter" EntitySet="Voters" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="LookupEntity" >
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EventsModelStoreContainer" CdmEntityContainer="EventsEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="EventsModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="EventsModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Durations">
+            <EntityTypeMapping TypeName="EventsModel.Duration">
+              <MappingFragment StoreEntitySet="Duration">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="EventsModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="OnlineUrl" ColumnName="OnlineUrl" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="EventsModel.Level">
+              <MappingFragment StoreEntitySet="Level">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="EventsModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sessions">
+            <EntityTypeMapping TypeName="EventsModel.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+                <ScalarProperty Name="DurationId" ColumnName="DurationId" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="Abstract" ColumnName="Abstract" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EventsModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voters">
+            <EntityTypeMapping TypeName="EventsModel.Voter">
+              <MappingFragment StoreEntitySet="Voter">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

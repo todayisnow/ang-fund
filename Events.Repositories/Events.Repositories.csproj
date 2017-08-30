@@ -52,10 +52,19 @@
     <Compile Include="CountryRepository.cs">
       <DependentUpon>RepositoryTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="DurationRepository.cs">
+      <DependentUpon>RepositoryTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventRepository.cs">
+      <DependentUpon>RepositoryTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="FunctionHelperRepository.Generated.cs">
       <DependentUpon>RepositoryTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="GenderRepository.cs">
+    <Compile Include="LevelRepository.cs">
+      <DependentUpon>RepositoryTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocationRepository.cs">
       <DependentUpon>RepositoryTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,13 +74,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="SessionRepository.cs">
+      <DependentUpon>RepositoryTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="UnitOfWork.cs" />
+    <Compile Include="UserRepository.cs">
+      <DependentUpon>RepositoryTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VoterRepository.cs">
+      <DependentUpon>RepositoryTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interceptor.cs" />
     <None Include="packages.config" />
     <None Include="Shared.ttinclude" />
   </ItemGroup>
