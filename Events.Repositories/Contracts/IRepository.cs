@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Events.Repositories
 {
@@ -14,12 +11,12 @@ namespace Events.Repositories
         IEnumerable<TEntity> FetchAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int pageSize, int pageNumber, params Expression<Func<TEntity, object>>[] paths);
         IEnumerable<TEntity> FetchMany(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] paths);
         IEnumerable<TEntity> FetchMany(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int pageSize, int pageNumber, params Expression<Func<TEntity, object>>[] paths);
-        IEnumerable<K> FetchAllOfType<K>(params Expression<Func<K, Object>>[] paths);
-        IEnumerable<K> FetchAllOfType<K>(Func<IQueryable<K>, IOrderedQueryable<K>> orderBy, int pageSize, int pageNumber, params Expression<Func<K, object>>[] paths);
-        IEnumerable<K> FetchManyOfType<K>(Expression<Func<K, bool>> predicate, params Expression<Func<K, object>>[] paths);
-        IEnumerable<K> FetchManyOfType<K>(Expression<Func<K, bool>> predicate, Func<IQueryable<K>, IOrderedQueryable<K>> orderBy, int pageSize, int pageNumber, params Expression<Func<K, object>>[] paths);
-        K FetchOfType<K>(Expression<Func<K, bool>> predicate, params Expression<Func<K, object>>[] paths);
-        
+        IEnumerable<TK> FetchAllOfType<TK>(params Expression<Func<TK, Object>>[] paths);
+        IEnumerable<TK> FetchAllOfType<TK>(Func<IQueryable<TK>, IOrderedQueryable<TK>> orderBy, int pageSize, int pageNumber, params Expression<Func<TK, object>>[] paths);
+        IEnumerable<TK> FetchManyOfType<TK>(Expression<Func<TK, bool>> predicate, params Expression<Func<TK, object>>[] paths);
+        IEnumerable<TK> FetchManyOfType<TK>(Expression<Func<TK, bool>> predicate, Func<IQueryable<TK>, IOrderedQueryable<TK>> orderBy, int pageSize, int pageNumber, params Expression<Func<TK, object>>[] paths);
+        TK FetchOfType<TK>(Expression<Func<TK, bool>> predicate, params Expression<Func<TK, object>>[] paths);
+
         TEntity Fetch(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] paths);
         TEntity Fetch(params object[] keys);
         IEnumerable<TEntity> SqlQuery(string esqlText, object[] parameters);

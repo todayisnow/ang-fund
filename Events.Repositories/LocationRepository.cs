@@ -7,17 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+	
+
+
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Entity;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Events.EF;
 using Events.Entities;
-using Events.Common;
 
 namespace Events.Repositories
 {
@@ -31,60 +29,60 @@ namespace Events.Repositories
 			
 		public IEnumerable<Location> FetchAllLocations(params Expression<Func<Location, object>>[] paths)
 		{
-			return _iRepository.FetchAll(paths);
+			return IRepository.FetchAll(paths);
 		}
 	
 		public IEnumerable<Location> FetchAllLocations(Func<IQueryable<Location>, IOrderedQueryable<Location>> orderBy, int pageSize, int pageNumber, params Expression<Func<Location, object>>[] paths)
 		{
-	        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
+	        return IRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 		}
 	
 		public IEnumerable<Location> FetchManyLocations(Expression<Func<Location, bool>> predicate, params Expression<Func<Location, object>>[] paths)
 		{
-			return _iRepository.FetchMany(predicate, paths);
+			return IRepository.FetchMany(predicate, paths);
 		}
 	
 	    public IEnumerable<Location> FetchManyLocations(Expression<Func<Location, bool>> predicate, Func<IQueryable<Location>, IOrderedQueryable<Location>> orderBy, int pageSize, int pageNumber, params Expression<Func<Location, object>>[] paths)
 	    {
-	        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
+	        return IRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
 	    }
 	
 		public Location FetchLocation(Expression<Func<Location, bool>> predicate, params Expression<Func<Location, object>>[] paths)
 		{
-			return _iRepository.Fetch(predicate, paths);
+			return IRepository.Fetch(predicate, paths);
 		}
 	
 		
 	
 		public Location FetchLocation(params object[] keys)
 		{
-			return _iRepository.Fetch(keys);
+			return IRepository.Fetch(keys);
 		}
 	
 		
 	
 		public IEnumerable<Location> SqlQuery(string esqlText, object[] Parameters)
 		{
-			return _iRepository.SqlQuery(esqlText, Parameters);
+			return IRepository.SqlQuery(esqlText, Parameters);
 		}
 	
 		public void AddLocation(Location entity)
 		{
-			 _iRepository.Add(entity);
+			 IRepository.Add(entity);
 		}
 	
 		
 	
 		public void UpdateLocation(Location entity)
 		{
-			 _iRepository.Update(entity, e => e.Id == entity.Id);
+			 IRepository.Update(entity, e => e.Id == entity.Id);
 		}
 	
 		
 	
 		public void DeleteLocation(Location entity)
 		{
-			 _iRepository.Delete(entity, e => e.Id == entity.Id);
+			 IRepository.Delete(entity, e => e.Id == entity.Id);
 		}
 	
 		

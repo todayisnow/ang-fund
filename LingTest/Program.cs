@@ -1,14 +1,14 @@
 ﻿using Events.Entities;
+using Events.Ioc;
 using Events.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
 
 namespace LingTest
 {
@@ -17,42 +17,26 @@ namespace LingTest
         static void Main(string[] args)
         {
 
-            try
-            {
-
-                var u = new UnitOfWork(new EventsEntities());
-                var f = DateTime.Now.Ticks;
-                u.Cities.FetchAllCities();
-                Console.WriteLine(DateTime.Now.Ticks - f);
-           
-            }
-            catch (DbEntityValidationException ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-            }
 
 
-
-        }
-
-    }
-    public class V
-    {
-        public async Task a()
-        {
-            await c();
+            UnityContainer uc = new UnityContainer();
+            uc.RegisterType<IUnitOfWork, UnitOfWork>();
+            uc.RegisterType<EventsEntities, EventsEntities>(new PerThreadLifetimeManager());
+            uc.RegisterType<CityRepository, CityRepository>();
+            uc.RegisterType<CountryRepository, CountryRepository>();
+    
+            var u = uc.Resolve<IUnitOfWork>();
             
-        }
+           u.Cities.AddCity(new City()
+           {
+               NameAr = "dd",
+               CountryId = 1
+           });
 
-        public async void b()
-        {
-            await c();
         }
-        public async Task c()
-        {
-            await Task.Delay(1000);
-            throw new NotImplementedException();
-        }
+       
+
     }
+
    
 }

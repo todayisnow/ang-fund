@@ -7,17 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+	using Events.Common;
+
+
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Entity;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Events.EF;
 using Events.Entities;
-using Events.Common;
 
 namespace Events.Repositories
 {
@@ -31,60 +29,60 @@ namespace Events.Repositories
 			
 		public IEnumerable<Duration> FetchAllDurations(params Expression<Func<Duration, object>>[] paths)
 		{
-			return _iRepository.FetchAll(paths);
+			return IRepository.FetchAll(paths);
 		}
 	
 		public IEnumerable<Duration> FetchAllDurations(Func<IQueryable<Duration>, IOrderedQueryable<Duration>> orderBy, int pageSize, int pageNumber, params Expression<Func<Duration, object>>[] paths)
 		{
-	        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
+	        return IRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 		}
 	
 		public IEnumerable<Duration> FetchManyDurations(Expression<Func<Duration, bool>> predicate, params Expression<Func<Duration, object>>[] paths)
 		{
-			return _iRepository.FetchMany(predicate, paths);
+			return IRepository.FetchMany(predicate, paths);
 		}
 	
 	    public IEnumerable<Duration> FetchManyDurations(Expression<Func<Duration, bool>> predicate, Func<IQueryable<Duration>, IOrderedQueryable<Duration>> orderBy, int pageSize, int pageNumber, params Expression<Func<Duration, object>>[] paths)
 	    {
-	        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
+	        return IRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
 	    }
 	
 		public Duration FetchDuration(Expression<Func<Duration, bool>> predicate, params Expression<Func<Duration, object>>[] paths)
 		{
-			return _iRepository.Fetch(predicate, paths);
+			return IRepository.Fetch(predicate, paths);
 		}
 	
 		
 	
 		public Duration FetchDuration(params object[] keys)
 		{
-			return _iRepository.Fetch(keys);
+			return IRepository.Fetch(keys);
 		}
 	
 		
 	
 		public IEnumerable<Duration> SqlQuery(string esqlText, object[] Parameters)
 		{
-			return _iRepository.SqlQuery(esqlText, Parameters);
+			return IRepository.SqlQuery(esqlText, Parameters);
 		}
 	
 		public void AddDuration(Duration entity)
 		{
-			 _iRepository.Add(entity);
+			 IRepository.Add(entity);
 		}
 	
 		
 	
 		public void UpdateDuration(Duration entity)
 		{
-			 _iRepository.Update(entity, e => e.Id == entity.Id);
+			 IRepository.Update(entity, e => e.Id == entity.Id);
 		}
 	
 		
 	
 		public void DeleteDuration(Duration entity)
 		{
-			 _iRepository.Delete(entity, e => e.Id == entity.Id);
+			 IRepository.Delete(entity, e => e.Id == entity.Id);
 		}
 	
 		

@@ -5,54 +5,90 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Events.Ioc;
+using Microsoft.Practices.Unity;
 
 namespace Events.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly EventsEntities db;
-
+        private readonly EventsEntities _db;
+ MyContainer v = new MyContainer();
 
         public UnitOfWork(EventsEntities dbContext)
         {
-            db = dbContext;
+            _db = dbContext;
+           
+            v.Register<Repository<City>,CityRepository>();
         }
 
-        private CityRepository _Cities;
+        public Dictionary<Type,object> repositories = new Dictionary<Type, object>();
 
-        public CityRepository Cities
+        public IRepository<T> GetRepository<T>() where T : class
         {
-            get
+            if (repositories.Keys.Contains(typeof(T)))
             {
-
-                if (this._Cities == null)
-                {
-                    this._Cities = new CityRepository(db, noTracking: true);
-                }
-                return this._Cities ;
+                return repositories[typeof(T)] as IRepository<T>;
             }
+            throw new Exception();
         }
+       public  void SetRepo<T>(IRepository<T> r) where T : class
+
+        {
+            repositories.Add(typeof(T), r);
+        }
+        private CityRepository _cities;
+        private CountryRepository _countries;
+        private DurationRepository _durations;
+        private EventRepository _events;
+        private LevelRepository _levels;
+        private LocationRepository _locations;
+        private SessionRepository _sessions;
+        private UserRepository _users;
+        private VoterRepository _voters;
+
+        //  public CityRepository Cities => _cities ?? (_cities = new CityRepository(_db));
+        [Dependency]
+        public CityRepository Cities { get; set; }
+       // public CountryRepository Countries => _countries?? (_countries = new CountryRepository(_db));
+        [Dependency]
+        public CountryRepository Countries { get; set; }
+
+        public DurationRepository Durations => _durations?? (_durations = new DurationRepository(_db));
+
+        public EventRepository Events => _events?? (_events = new EventRepository(_db));
+
+        public LevelRepository Levels => _levels?? (_levels = new LevelRepository(_db));
+
+        public LocationRepository Locations => _locations?? (_locations = new LocationRepository(_db));
+
+        public SessionRepository Sessions => _sessions?? (_sessions = new SessionRepository(_db));
+
+        public UserRepository Users => _users?? (_users = new UserRepository(_db));
+
+        public VoterRepository Voters => _voters?? (_voters = new VoterRepository(_db));
+
         public int Complete()
         {
-            int result = 0;
+            var result = 0;
             try
             {
-                result = db.SaveChanges();
+                result = _db.SaveChanges();
             }
             catch (DbEntityValidationException e)
             {
                 ThrowEnhancedValidationException(e);
             }
-            catch(DataException e)
+            catch(DataException )
             {
-                throw e;
+                throw;
             }
-            catch(Exception e)
+            catch(Exception )
             {
-                throw e;
+                throw ;
             }
             return result;
         }
@@ -60,7 +96,7 @@ namespace Events.Repositories
         {
             try
             {
-                foreach (var entry in db.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged))
+                foreach (var entry in _db.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged))
                 {
                     switch (entry.State)
                     {
@@ -71,7 +107,6 @@ namespace Events.Repositories
                         case EntityState.Modified:
                             entry.Reload();
                             break;
-
                     }
                 }
             }
@@ -83,11 +118,11 @@ namespace Events.Repositories
 
         int IUnitOfWork.SaveChanges()
         {
-            return db.SaveChanges();
+            return _db.SaveChanges();
         }
 
 
-        protected void ThrowEnhancedValidationException(DbEntityValidationException e)
+        private void ThrowEnhancedValidationException(DbEntityValidationException e)
         {
             var errorMessages = e.EntityValidationErrors
                     .SelectMany(x => x.ValidationErrors)
@@ -100,38 +135,26 @@ namespace Events.Repositories
 
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
+        private bool _disposedValue ; // To detect redundant calls
+        
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _db.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~UnitOfWork() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
         void IDisposable.Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
+        
+        
         #endregion
 
 

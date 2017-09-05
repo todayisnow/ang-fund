@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Events.Api.Models
+﻿namespace Events.Api.Models
 {
     public class SessionModel
     {

@@ -31,11 +31,15 @@ var baseTypes = typeMapper.GetItemsToGenerate<EntityType>(itemCollection).Where(
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection).Where(e => e.BaseType == null))
 {
     fileManager.StartNewFile(entity.Name + entityNameSuffix + ".cs");
-#>
-<#=codeStringGenerator.UsingDirectives(false, "System.Linq", "System.Linq.Expressions", "System.Data.Entity", "System.Collections.Generic", "System.Runtime.Serialization", "System.ComponentModel.DataAnnotations", "System.Threading.Tasks",  "Events.EF", "Events.Entities","Events.Common")#>
+	var lookupEntityMetadata = codeStringGenerator.GetLookupEntityMetadata(entity);
+	#>
+	<#=lookupEntityMetadata!=null ? "using Events.Common;" : ""#>
+
+
+<#=codeStringGenerator.UsingDirectives(false, "System.Linq", "System.Linq.Expressions", "System.Data.Entity", "System.Collections.Generic", "Events.Entities")#>
 <#
     BeginNamespace(code);
-	var lookupEntityMetadata = codeStringGenerator.GetLookupEntityMetadata(entity);
+	
 #>
 public partial class <#=code.Escape(entity) + entityNameSuffix#> : Repository<<#=code.Escape(entity)#>><#=lookupEntityMetadata == null ? "" : string.Format(", ILookupRepository<{0}>", code.Escape(entity))#>
 {
@@ -53,60 +57,60 @@ public partial class <#=code.Escape(entity) + entityNameSuffix#> : Repository<<#
 		
 	public IEnumerable<<#=code.Escape(entity)#>> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>(params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
 	{
-		return _iRepository.FetchAll(paths);
+		return IRepository.FetchAll(paths);
 	}
 
 	public IEnumerable<<#=code.Escape(entity)#>> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>(Func<IQueryable<<#=code.Escape(entity)#>>, IOrderedQueryable<<#=code.Escape(entity)#>>> orderBy, int pageSize, int pageNumber, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
 	{
-        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
+        return IRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 	}
 
 	public IEnumerable<<#=code.Escape(entity)#>> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
 	{
-		return _iRepository.FetchMany(predicate, paths);
+		return IRepository.FetchMany(predicate, paths);
 	}
 
     public IEnumerable<<#=code.Escape(entity)#>> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, Func<IQueryable<<#=code.Escape(entity)#>>, IOrderedQueryable<<#=code.Escape(entity)#>>> orderBy, int pageSize, int pageNumber, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
     {
-        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
+        return IRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
     }
 
 	public <#=code.Escape(entity)#> Fetch<#=code.Escape(entity)#>(Expression<Func<<#=code.Escape(entity)#>, bool>> predicate, params Expression<Func<<#=code.Escape(entity)#>, object>>[] paths)
 	{
-		return _iRepository.Fetch(predicate, paths);
+		return IRepository.Fetch(predicate, paths);
 	}
 
 	
 
 	public <#=code.Escape(entity)#> Fetch<#=code.Escape(entity)#>(params object[] keys)
 	{
-		return _iRepository.Fetch(keys);
+		return IRepository.Fetch(keys);
 	}
 
 	
 
 	public IEnumerable<<#=code.Escape(entity)#>> SqlQuery(string esqlText, object[] Parameters)
 	{
-		return _iRepository.SqlQuery(esqlText, Parameters);
+		return IRepository.SqlQuery(esqlText, Parameters);
 	}
 
 	public void Add<#=code.Escape(entity)#>(<#=code.Escape(entity)#> entity)
 	{
-		 _iRepository.Add(entity);
+		 IRepository.Add(entity);
 	}
 
 	
 
 	public void Update<#=code.Escape(entity)#>(<#=code.Escape(entity)#> entity)
 	{
-		 _iRepository.Update(entity, <#=codeStringGenerator.GetEntitySelectorFunc(entity)#>);
+		 IRepository.Update(entity, <#=codeStringGenerator.GetEntitySelectorFunc(entity)#>);
 	}
 
 	
 
 	public void Delete<#=code.Escape(entity)#>(<#=code.Escape(entity)#> entity)
 	{
-		 _iRepository.Delete(entity, <#=codeStringGenerator.GetEntitySelectorFunc(entity)#>);
+		 IRepository.Delete(entity, <#=codeStringGenerator.GetEntitySelectorFunc(entity)#>);
 	}
 
 	
@@ -118,27 +122,27 @@ public partial class <#=code.Escape(entity) + entityNameSuffix#> : Repository<<#
 	#region Base type specific operations
 	public IQueryable<T> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T>(params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
 	{
-		return _iRepository.FetchAllOfType(paths);
+		return IRepository.FetchAllOfType(paths);
 	}
 
 	public IQueryable<T> FetchAll<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T, TKey>(Expression<Func<T, TKey>> orderBy, int pageSize, int pageNumber, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
 	{
-        return _iRepository.FetchAllOfType(orderBy, pageSize, pageNumber, paths);
+        return IRepository.FetchAllOfType(orderBy, pageSize, pageNumber, paths);
 	}
 
 	public IQueryable<T> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
 	{
-		return _iRepository.FetchManyOfType(predicate, paths);
+		return IRepository.FetchManyOfType(predicate, paths);
 	}
 
     public IQueryable<T> FetchMany<#=pluralizationService.Pluralize(code.Escape(entity))#>OfType<T, TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderBy, int pageSize, int pageNumber, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
     {
-        return _iRepository.FetchManyOfType(predicate, orderBy, pageSize, pageNumber, paths);
+        return IRepository.FetchManyOfType(predicate, orderBy, pageSize, pageNumber, paths);
     }
 
 	public T Fetch<#=code.Escape(entity)#>OfType<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths) where T : <#=code.Escape(entity)#>
 	{
-		return _iRepository.FetchOfType(predicate, paths);
+		return IRepository.FetchOfType(predicate, paths);
 	}
 
 	

@@ -7,17 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+	using Events.Common;
+
+
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Entity;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Events.EF;
 using Events.Entities;
-using Events.Common;
 
 namespace Events.Repositories
 {
@@ -31,60 +29,60 @@ namespace Events.Repositories
 			
 		public IEnumerable<Level> FetchAllLevels(params Expression<Func<Level, object>>[] paths)
 		{
-			return _iRepository.FetchAll(paths);
+			return IRepository.FetchAll(paths);
 		}
 	
 		public IEnumerable<Level> FetchAllLevels(Func<IQueryable<Level>, IOrderedQueryable<Level>> orderBy, int pageSize, int pageNumber, params Expression<Func<Level, object>>[] paths)
 		{
-	        return _iRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
+	        return IRepository.FetchAll(orderBy, pageSize, pageNumber, paths);
 		}
 	
 		public IEnumerable<Level> FetchManyLevels(Expression<Func<Level, bool>> predicate, params Expression<Func<Level, object>>[] paths)
 		{
-			return _iRepository.FetchMany(predicate, paths);
+			return IRepository.FetchMany(predicate, paths);
 		}
 	
 	    public IEnumerable<Level> FetchManyLevels(Expression<Func<Level, bool>> predicate, Func<IQueryable<Level>, IOrderedQueryable<Level>> orderBy, int pageSize, int pageNumber, params Expression<Func<Level, object>>[] paths)
 	    {
-	        return _iRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
+	        return IRepository.FetchMany(predicate, orderBy, pageSize, pageNumber, paths);
 	    }
 	
 		public Level FetchLevel(Expression<Func<Level, bool>> predicate, params Expression<Func<Level, object>>[] paths)
 		{
-			return _iRepository.Fetch(predicate, paths);
+			return IRepository.Fetch(predicate, paths);
 		}
 	
 		
 	
 		public Level FetchLevel(params object[] keys)
 		{
-			return _iRepository.Fetch(keys);
+			return IRepository.Fetch(keys);
 		}
 	
 		
 	
 		public IEnumerable<Level> SqlQuery(string esqlText, object[] Parameters)
 		{
-			return _iRepository.SqlQuery(esqlText, Parameters);
+			return IRepository.SqlQuery(esqlText, Parameters);
 		}
 	
 		public void AddLevel(Level entity)
 		{
-			 _iRepository.Add(entity);
+			 IRepository.Add(entity);
 		}
 	
 		
 	
 		public void UpdateLevel(Level entity)
 		{
-			 _iRepository.Update(entity, e => e.Id == entity.Id);
+			 IRepository.Update(entity, e => e.Id == entity.Id);
 		}
 	
 		
 	
 		public void DeleteLevel(Level entity)
 		{
-			 _iRepository.Delete(entity, e => e.Id == entity.Id);
+			 IRepository.Delete(entity, e => e.Id == entity.Id);
 		}
 	
 		

@@ -3,11 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Events.Repositories
 {
@@ -15,41 +12,30 @@ namespace Events.Repositories
     {
 
         #region Constructors and Factories
+
         public Repository(DbContext ctx, bool noTracking = true)
         {
             _ctx = ctx as EventsEntities;
-            _iRepository = this;
+            IRepository = this;
             NoTracking = noTracking;
         }
         #endregion
 
         #region Fields
 
-        protected readonly EventsEntities _ctx;
+        private readonly EventsEntities _ctx;
         private DbSet<TEntity> _dbSet;
-        protected readonly IRepository<TEntity> _iRepository;
-        protected bool NoTracking { get; private set; }
+        protected readonly IRepository<TEntity> IRepository;
+        private bool NoTracking { get; set; }
 
         #endregion
 
         #region Properties
 
-        protected DbSet<TEntity> EntitySet
-        {
-            get
-            {
-                if (_dbSet == null)
-                    _dbSet = _ctx.Set<TEntity>();
-                return _dbSet;
-            }
-        }
-        protected DbQuery<TEntity> EntityQuery
-        {
-            get
-            {
-                return NoTracking ? EntitySet.AsNoTracking() : EntitySet;
-            }
-        }
+        private DbSet<TEntity> EntitySet => _dbSet ?? (_dbSet = _ctx.Set<TEntity>());
+
+        protected DbQuery<TEntity> EntityQuery => NoTracking ? EntitySet.AsNoTracking() : EntitySet;
+
         #endregion
 
         #region Operations
@@ -57,30 +43,29 @@ namespace Events.Repositories
         IEnumerable<TEntity> IRepository<TEntity>.FetchAll(params Expression<Func<TEntity, object>>[] paths)
         {
             var query = EntityQuery.AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            if (paths != null)
+                query = paths.Aggregate(query, (current, path) => current.Include(path));
             return query.ToList();
         }
         IEnumerable<TEntity> IRepository<TEntity>.FetchAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int pageSize, int pageNumber, params Expression<Func<TEntity, object>>[] paths)
         {
             var query = EntityQuery.AsQueryable();
-            if(paths !=null)
-            foreach (var path in paths)
-                query = query.Include(path);
-            return  orderBy(query).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            if (paths != null)
+                query = paths.Aggregate(query, (current, path) => current.Include(path));
+            return orderBy(query).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
         IEnumerable<TEntity> IRepository<TEntity>.FetchMany(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] paths)
         {
             var query = EntityQuery.AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            if (paths != null)
+                query = paths.Aggregate(query, (current, path) => current.Include(path));
             return query.Where(predicate).ToList();
         }
         IEnumerable<TEntity> IRepository<TEntity>.FetchMany(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int pageSize, int pageNumber, params Expression<Func<TEntity, object>>[] paths)
         {
             var query = EntityQuery.AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            if (paths != null)
+                query = paths.Aggregate(query, (current, path) => current.Include(path));
             query = query.Where(predicate);
             return orderBy(query).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
@@ -88,8 +73,8 @@ namespace Events.Repositories
         TEntity IRepository<TEntity>.Fetch(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] paths)
         {
             var query = EntityQuery.AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            if (paths != null)
+                query = paths.Aggregate(query, (current, path) => current.Include(path));
             return query.SingleOrDefault(predicate);
         }
         TEntity IRepository<TEntity>.Fetch(params object[] keys)
@@ -98,55 +83,51 @@ namespace Events.Repositories
         }
 
         #region Inheritance
-        IEnumerable<K> IRepository<TEntity>.FetchAllOfType<K>(params Expression<Func<K, object>>[] paths)
+        IEnumerable<TK> IRepository<TEntity>.FetchAllOfType<TK>(params Expression<Func<TK, object>>[] paths)
         {
-            var query = EntityQuery.OfType<K>().AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            var query = EntityQuery.OfType<TK>().AsQueryable();
+            if (paths != null) query = paths.Aggregate(query, (current, path) => current.Include(path));
             return query.ToList();
         }
-        IEnumerable<K> IRepository<TEntity>.FetchAllOfType<K>(Func<IQueryable<K>, IOrderedQueryable<K>> orderBy, int pageSize, int pageNumber, params Expression<Func<K, object>>[] paths)
+        IEnumerable<TK> IRepository<TEntity>.FetchAllOfType<TK>(Func<IQueryable<TK>, IOrderedQueryable<TK>> orderBy, int pageSize, int pageNumber, params Expression<Func<TK, object>>[] paths)
         {
-            var query = EntityQuery.OfType<K>().AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            var query = EntityQuery.OfType<TK>().AsQueryable();
+            if (paths != null) query = paths.Aggregate(query, (current, path) => current.Include(path));
             return orderBy(query).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
-        IEnumerable<K> IRepository<TEntity>.FetchManyOfType<K>(Expression<Func<K, bool>> predicate, params Expression<Func<K, object>>[] paths)
+        IEnumerable<TK> IRepository<TEntity>.FetchManyOfType<TK>(Expression<Func<TK, bool>> predicate, params Expression<Func<TK, object>>[] paths)
         {
-            var query = EntityQuery.OfType<K>().AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            var query = EntityQuery.OfType<TK>().AsQueryable();
+            if (paths != null) query = paths.Aggregate(query, (current, path) => current.Include(path));
             return query.Where(predicate).ToList();
         }
-        IEnumerable<K> IRepository<TEntity>.FetchManyOfType<K>(Expression<Func<K, bool>> predicate, Func<IQueryable<K>, IOrderedQueryable<K>> orderBy, int pageSize, int pageNumber, params Expression<Func<K, object>>[] paths)
+        IEnumerable<TK> IRepository<TEntity>.FetchManyOfType<TK>(Expression<Func<TK, bool>> predicate, Func<IQueryable<TK>, IOrderedQueryable<TK>> orderBy, int pageSize, int pageNumber, params Expression<Func<TK, object>>[] paths)
         {
-            var query = EntityQuery.OfType<K>().AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            var query = EntityQuery.OfType<TK>().AsQueryable();
+            if (paths != null) query = paths.Aggregate(query, (current, path) => current.Include(path));
             query = query.Where(predicate);
             return orderBy(query).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         }
-        K IRepository<TEntity>.FetchOfType<K>(Expression<Func<K, bool>> predicate, params Expression<Func<K, object>>[] paths)
+        TK IRepository<TEntity>.FetchOfType<TK>(Expression<Func<TK, bool>> predicate, params Expression<Func<TK, object>>[] paths)
         {
-            var query = EntityQuery.OfType<K>().AsQueryable();
-            foreach (var path in paths)
-                query = query.Include(path);
+            var query = EntityQuery.OfType<TK>().AsQueryable();
+
+            if (paths != null) query = paths.Aggregate(query, (current, path) => current.Include(path));
             return query.SingleOrDefault(predicate);
         }
-       
+
         #endregion
 
-        IEnumerable<TEntity> IRepository<TEntity>.SqlQuery(string esqlText, object[] Parameters)
+        IEnumerable<TEntity> IRepository<TEntity>.SqlQuery(string esqlText, object[] parameters)
         {
-            return EntitySet.SqlQuery(esqlText, Parameters);
+            return EntitySet.SqlQuery(esqlText, parameters);
         }
         void IRepository<TEntity>.Add(TEntity entity)
         {
             try
             {
                 EntitySet.Add(entity);
-               
+
             }
             catch (Exception)
             {
@@ -181,7 +162,7 @@ namespace Events.Repositories
                     }
                 }
             }
-           
+
         }
         void IRepository<TEntity>.Delete(TEntity entity, Func<TEntity, bool> entitySelector = null)
         {
@@ -212,42 +193,29 @@ namespace Events.Repositories
             {
                 EntitySet.Remove(entity);
             }
-           
+
         }
 
 
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
-                if (disposing && _ctx != null)
+                if (disposing)
                 {
-                    _ctx.Dispose();
+                    _ctx?.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~Repository() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
         void IDisposable.Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
         #endregion
